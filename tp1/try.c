@@ -9,6 +9,8 @@ int try(struct ctx_s * ctx, func_t f, int arg) {
 	asm("movl %%ebp, %0"
 			: "=r" (ctx->ctx_ebp)
 			: );
+	printf("esp try -> %p", ctx->ctx_esp);
+	printf("ebp try -> %p", ctx->ctx_ebp);
 	return f(arg);
 }
 

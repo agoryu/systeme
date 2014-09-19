@@ -8,12 +8,15 @@ static int mul(int depth) {
 		case EOF:
 			return 1;
 		case 0:
-			return mul(depth+1);
+			/*return mul(depth+1);*/
+			return 1;
 		case 1:
-			if(i)
+			if(i) {
 				return i * mul(depth+1);
-			else 
+			} else {
+				printf("passage dans le throw\n");
 				return throw(&ctx, i);
+			}
 	}
 	return -1;
 }
