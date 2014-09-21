@@ -5,6 +5,8 @@ CFLAGS	+= -D_XOPEN_SOURCE=500
 CFLAGS	+= -g
 
 
+all		: try display_stack
+
 try		: try_mul.c try.o
 		$(CC) $(CFLAGS) try_mul.c try.o -o try
 
