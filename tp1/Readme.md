@@ -11,11 +11,11 @@ TP1 : try/catch
 
 ## Display stack
 
-Le programme display_stack affiche la pile des fonctions appelés.
-- L'adresse du pointeur *esp* (stack pointer) est au-dessus de l'adresse du pointeur *ebp* (base pointer) dans la pile. C'est-a-dire que l'adresse *esp* est avant celle de *ebp* dans la memoire
-- Les adresse des variables automatiques locales se trouvent entre les pointeurs *esp* et *ebp*
-- Les adresse des parametres de la fonction courante se trouvent sous le pointeur *ebp* dans la pile. C'est-a-dire plus long dans la mémoire.
-- Lorsqu'on appel une fonction depuis une autre fonction. Les emplacements des pointeur* *esp et *ebp* pour la fonction qui a été appelé sont avant dans la mémoire par rapport a la fonction qui a appalé. La fonction qui a été appelé est au-dessus dans la pile.
+Le programme display_stack affiche la pile des fonctions appelées.
+- L'adresse du pointeur *esp* (stack pointer) est au-dessus de l'adresse du pointeur *ebp* (base pointer) dans la pile. C'est-a-dire que l'adresse *esp* est avant celle de *ebp* dans la memoire.
+- Les adresses des variables automatiques locales se trouvent entre les pointeurs *esp* et *ebp*.
+- Les adresses des parametres de la fonction courante se trouvent sous le pointeur *ebp* dans la pile. C'est-a-dire plus long dans la mémoire.
+- Lorsqu'on appelle une fonction depuis une autre fonction. Les emplacements des pointeurs *esp* et *ebp* pour la fonction qui a été appelé sont avant dans la mémoire par rapport a la fonction qui a appalé. La fonction qui a été appelé est au-dessus dans la pile.
 
 
 ## Try/Catch
