@@ -9,8 +9,8 @@ int try(struct ctx_s * ctx, func_t f, int arg) {
 	asm("movl %%ebp, %0"
 			: "=r" (ctx->ctx_ebp)
 			: );
-	printf("esp try -> %p", ctx->ctx_esp);
-	printf("ebp try -> %p", ctx->ctx_ebp);
+	printf("esp try -> %p\n", ctx->ctx_esp);
+	printf("ebp try -> %p\n", ctx->ctx_ebp);
 	return f(arg);
 }
 
@@ -30,6 +30,8 @@ int throw(struct ctx_s * pctx, int r) {
 			:
 			:"r" (pctx->ctx_ebp));
 
+	printf("esp throw -> %p\n", pctx->ctx_esp);
+	printf("ebp throw -> %p\n", pctx->ctx_ebp);
 	pctx->ctx_magic = 0;
 
 	return throw_r;

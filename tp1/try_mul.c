@@ -8,8 +8,8 @@ static int mul(int depth) {
 		case EOF:
 			return 1;
 		case 0:
-			/*return mul(depth+1);*/
-			return 1;
+			return mul(depth+1);
+			/*return 1;*/
 		case 1:
 			if(i) {
 				return i * mul(depth+1);

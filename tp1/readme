@@ -1,2 +1,9 @@
 Deflandre Gaëtan
 Vanegue Elliot
+
+L'implémantation des fonctions try et throw permet au programme de ne pas 
+refaire toutes les étapes d'une fonction récurcive en cas d'erreur ou 
+d'un cas qui n'est pas interessant.
+
+Ces deux fonctions permettent de déplacer le pied et la tête du registre afin 
+de pointer sur une précédente partie du code.
