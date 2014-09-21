@@ -1,8 +1,13 @@
 TP1 : try/catch
 ===============
 
-Deflandre Gaëtan
-Vanegue Elliot
+# Auteur
+
+- Deflandre Gaëtan
+- Vanegue Elliot
+
+
+# Description
 
 L'implémantation des fonctions try et throw permet au programme de ne pas 
 refaire toutes les étapes d'une fonction récurcive en cas d'erreur ou 
