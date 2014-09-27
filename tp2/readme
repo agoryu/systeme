@@ -4,3 +4,5 @@ Gaetan Deflandre
 La fonction switch_to_ctx permet d'échanger des contextes. Cela signifie
 que la méthode va passer d'une pile à une autre lors de l'exécution du 
 ping pong.
+
+Le programme ne boucle plus à l'infini mais se termine sur le main.
