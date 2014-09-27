@@ -7,7 +7,7 @@ int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
   ctx->ctx_stack = malloc(stack_size);
   if(ctx->ctx_stack == NULL){
     perror("Erreur d'allocution pour la stack\n");
-    return -1;
+    return 0;
   }
 
   ctx->ctx_esp = ctx->ctx_ebp = ((char*)ctx->ctx_stack) +stack_size - 4;
@@ -17,7 +17,7 @@ int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
   ctx->ctx_state = CTX_INIT;
   ctx->ctx_magic = CTX_MAGIC;
 
-  return 0;
+  return 1;
 }
 
 void switch_to_ctx(struct ctx_s *ctx){
