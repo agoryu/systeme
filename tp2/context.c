@@ -1,6 +1,8 @@
 #include "context.h"
 
-static struct ctx_current_s *current_ctx = (struct ctx_current_s*)0;
+static struct ctx_s *current_ctx = (struct ctx_s*)0;
+void* initial_esp;
+void* initial_ebp;
 
 int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
 
@@ -21,23 +23,31 @@ int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
 }
 
 void switch_to_ctx(struct ctx_s *ctx){
+  
+  static int first_call = 1;
+
+  if(first_call){
+    first_call = 0;
+    asm("movl %%esp, %0"
+	: "=r" (initial_esp)
+	: );
+    asm("movl %%ebp, %0"
+	: "=r" (initial_ebp)
+	: );
+  }
+  
+
   if(current_ctx){
     assert(ctx->ctx_magic == CTX_MAGIC);
     asm("movl %%esp, %0"
-	: "=r" (current_ctx->current->ctx_esp)
+	: "=r" (current_ctx->ctx_esp)
 	: );
     asm("movl %%ebp, %0"
-	: "=r" (current_ctx->current->ctx_ebp)
-	: );
-  } else {	
-    asm("movl %%esp, %0"
-	: "=r" (current_ctx->esp_initial)
-	: );
-    asm("movl %%ebp, %0"
-	: "=r" (current_ctx->ebp_initial)
+	: "=r" (current_ctx->ctx_ebp)
 	: );
   }
-  current_ctx->current = ctx;
+
+  current_ctx = ctx;
   asm("movl %0, %%esp"
       : 
       :"r" (ctx->ctx_esp));
@@ -45,12 +55,19 @@ void switch_to_ctx(struct ctx_s *ctx){
       :
       :"r" (ctx->ctx_ebp));
   
-  if(current_ctx->current->ctx_state == CTX_INIT){
-    	current_ctx->current->ctx_state = CTX_EXQ;
-    	current_ctx->current->ctx_f(current_ctx->current->ctx_arg);
-    	current_ctx->current->ctx_state = CTX_END;
+  if(current_ctx->ctx_state == CTX_INIT){
+    	current_ctx->ctx_state = CTX_EXQ;
+    	current_ctx->ctx_f(current_ctx->ctx_arg);
+    	current_ctx->ctx_state = CTX_END;
     
-	while(1){}
+	first_call = 1;
+	current_ctx = (struct ctx_s*)0;
+	asm("movl %0, %%esp"
+	    : 
+	    :"r" (initial_esp));
+	asm("movl %0, %%ebp"
+	    :
+	    :"r" (initial_ebp));
   }
 
 }
