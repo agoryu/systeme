@@ -28,14 +28,23 @@ int main(int argc, char *argv[])
     perror("Erreur creation de context");
     exit(EXIT_FAILURE);
   }
+
+  printf("Hougululou\n");
+
   if( ! create_ctx(STACK_SIZE, f_pong, NULL)){
     perror("Erreur creation de context");
     exit(EXIT_FAILURE);
   }
+
+  printf("Hougululou\n");
+
   if( ! create_ctx(STACK_SIZE, f_pang, NULL)){
     perror("Erreur creation de context");
     exit(EXIT_FAILURE);
   }
+
+  printf("Hougululou\n");
+
   yield();
 
   printf("\nFin du programme dans le main\n");

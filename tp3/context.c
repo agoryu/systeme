@@ -50,15 +50,19 @@ int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
 void switch_to_ctx(struct ctx_s *ctx){
 
   /* si ctx est null on retourne au main */
-  if (!ctx) {
+  if (ctx == ctx->next) {
     first_call = 1;
-    current_ctx = (struct ctx_s*)0;
+    current_ctx = NULL;
+    ctx_ring = NULL;
+
     asm("movl %0, %%esp"
 	: 
 	:"r" (initial_esp));
     asm("movl %0, %%ebp"
 	:
 	:"r" (initial_ebp));
+
+    return;
   }
 
   if(ctx->ctx_state == CTX_END) {
@@ -113,7 +117,8 @@ void start_ctx() {
     /* retour au main */
     if(current_ctx == current_ctx->next) {
       first_call = 1;
-      current_ctx = (struct ctx_s*)0;
+      current_ctx = NULL;
+      ctx_ring = NULL;
       asm("movl %0, %%esp"
 	  : 
 	  :"r" (initial_esp));
