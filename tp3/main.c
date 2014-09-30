@@ -1,8 +1,6 @@
 #include "context.h"
 
-struct ctx_s ctx_ping; 
-struct ctx_s ctx_pong;
-struct ctx_s ctx_pang;
+#define STACK_SIZE 16384
 
 void f_ping(void *arg);
 void f_pong(void *arg);
@@ -10,17 +8,35 @@ void f_pang(void *arg);
 
 int main(int argc, char *argv[])
 {
-  init_ctx(&ctx_ping, 16384, f_ping, NULL);
-  init_ctx(&ctx_pong, 16384, f_pong, NULL);
-  init_ctx(&ctx_pang, 16384, f_pang, NULL);
-  switch_to_ctx(&ctx_ping);
+  if( ! create_ctx(STACK_SIZE, f_ping, NULL)){
+    perror("Erreur creation de context");
+    exit(EXIT_FAILURE);
+  }
+  if( ! create_ctx(STACK_SIZE, f_pong, NULL)){
+    perror("Erreur creation de context");
+    exit(EXIT_FAILURE);
+  }
+  if( ! create_ctx(STACK_SIZE, f_pang, NULL)){
+    perror("Erreur creation de context");
+    exit(EXIT_FAILURE);
+  }
+  yield();
 
   printf("\nRetour au main\n");
 
-  init_ctx(&ctx_ping, 16384, f_ping, NULL);
-  init_ctx(&ctx_pong, 16384, f_pong, NULL);
-  init_ctx(&ctx_pang, 16384, f_pang, NULL);
-  switch_to_ctx(&ctx_ping);
+  if( ! create_ctx(STACK_SIZE, f_ping, NULL)){
+    perror("Erreur creation de context");
+    exit(EXIT_FAILURE);
+  }
+  if( ! create_ctx(STACK_SIZE, f_pong, NULL)){
+    perror("Erreur creation de context");
+    exit(EXIT_FAILURE);
+  }
+  if( ! create_ctx(STACK_SIZE, f_pang, NULL)){
+    perror("Erreur creation de context");
+    exit(EXIT_FAILURE);
+  }
+  yield();
 
   printf("\nFin du programme dans le main\n");
 
@@ -30,30 +46,30 @@ int main(int argc, char *argv[])
 void f_ping(void *args)
 {
 
-    printf("A") ;
-    switch_to_ctx(&ctx_pong);
-    printf("B") ;
-    switch_to_ctx(&ctx_pang);
-    printf("C") ;
-    switch_to_ctx(&ctx_pang);
+  printf("A") ;
+  yield();
+  printf("B") ;
+  yield();
+  printf("C") ;
+  yield();
 
 }
 
 void f_pong(void *args)
 {
-    printf("1") ;
-    switch_to_ctx(&ctx_pang);
-    printf("2") ;
-    switch_to_ctx(&ctx_ping);
+  printf("1") ;
+  yield();
+  printf("2") ;
+  yield();
 
 }
 
 void f_pang(void *args)
 {
-    printf("a") ;
-    switch_to_ctx(&ctx_ping);
-    printf("b") ;
-    switch_to_ctx(&ctx_pong);
-    printf("c") ;
-    switch_to_ctx(&ctx_ping);
+  printf("a") ;
+  yield();
+  printf("b") ;
+  yield();
+  printf("c") ;
+  yield();
 } 
