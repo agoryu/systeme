@@ -121,12 +121,12 @@ void switch_to_ctx(struct ctx_s *ctx){
     if(new_ctx == NULL)
       return 0;
 
-    /* premier passage dans le create */
     if (ctx_ring != NULL) {
+      /* premier passage dans le create */
       new_ctx -> next = ctx_ring -> next;
       ctx_ring -> next = new_ctx;
-      /* tous les autres passages */
     } else {
+      /* tous les autres passages */
       ctx_ring = new_ctx;
       new_ctx -> next = new_ctx;
     }
@@ -137,8 +137,7 @@ void switch_to_ctx(struct ctx_s *ctx){
   void yield() {
     if(current_ctx)
       switch_to(current_ctx->next);
-    /* premiet passage */
-    else
+    else /* premier passage */
       switch_to(ctx_ring);
   }
 
