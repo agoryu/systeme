@@ -54,7 +54,7 @@ struct ctx_s {
  * \param[in] args L'argument de la fonction du contexte.
  * \return 0 en cas d'erreur, sinon 1.
  */
-int create_ctx(const int stack_size, const func_t f, const void * args);
+int create_ctx(int stack_size, func_t f, void * args);
 
 /**
  * Permet au contexte courant de passer la main à un autre contexte. Ce 
