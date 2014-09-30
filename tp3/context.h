@@ -41,22 +41,26 @@ struct ctx_s {
 	void * ctx_arg;
 	void * ctx_stack;
 	unsigned ctx_magic;
+        struct ctx_s * next;
 };
 
-/**
- * \brief Fonction permettant l'initiation d'un contexte 
- * \param[in] ctx 		contexte à initialiser
- * \param[in] stack_size 	taille du contexte à initialiser
- * \param[in] f			fonctione exécuter sur la pile
- * \param[in] arg		arguement de la fonctione lancé par le contexte
- * \return			0 en cas d'erreur et 1 sinon
- */
-int init_ctx(struct ctx_s * ctx, int stack_size, func_t f, void * arg);
 
 /**
- * \brief Fonction permettant d'échanger des contextes
- * \param[in] ctx 		context qui sera actif
+ * Crée un nouveau contexte et le mémorise dans une structure chaînée 
+ * circulaire.
+ *
+ * \param[in] stack_size La taille de la pile pour le contexte créé.
+ * \param[in] f La fonction du contexte.
+ * \param[in] args L'argument de la fonction du contexte.
+ * \return 0 en cas d'erreur, sinon 1.
  */
-void switch_to_ctx (struct ctx_s * ctx);
+int create_ctx(const int stack_size, const func_t f, const void * args);
+
+/**
+ * Permet au contexte courant de passer la main à un autre contexte. Ce 
+ * dernier étant déterminé par l'ordonnancement.
+ */
+void yield();
+
 
 #endif
