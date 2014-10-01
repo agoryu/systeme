@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include "hw.h"
 
 /**
  * \brief Define permettant de reconnaitre le contexte en cours 
@@ -61,6 +62,12 @@ int create_ctx(int stack_size, func_t f, void * args);
  * dernier étant déterminé par l'ordonnancement.
  */
 void yield();
+
+/**
+ * Installe les gestionnaires d’interruptions et initialise le matériel.
+ * \param[in] f Fonction associé à l'interruption.
+ */
+void start_sched(irq_handler_func_t f);
 
 
 #endif

@@ -25,9 +25,6 @@ static int first_call = 1;
 void* initial_esp;
 void* initial_ebp;
 
-
-
-
 int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
 
   ctx->ctx_stack = malloc(stack_size);
@@ -157,5 +154,10 @@ void yield() {
     switch_to_ctx(current_ctx->next);
   else /* premier passage */
     switch_to_ctx(ctx_ring);
+}
+
+void start_sched(irq_handler_func_t f) {
+	setup_irq(TIMER_IRQ, f);
+	start_hw();
 }
 
