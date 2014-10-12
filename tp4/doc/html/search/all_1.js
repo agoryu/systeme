@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['init_5fctx',['init_ctx',['../context_8h.html#a4b3ba7452f53264c24a280abc13d994d',1,'context.c']]]
+  ['sem_5fs',['sem_s',['../structsem__s.html',1,'']]],
+  ['start_5fsched',['start_sched',['../context_8h.html#aea3045ac46b7cb4307196f90fda80314',1,'context.c']]]
 ];

@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <unistd.h>
 #include "hw.h"
 
 /**
@@ -58,16 +59,9 @@ struct ctx_s {
 int create_ctx(int stack_size, func_t f, void * args);
 
 /**
- * Permet au contexte courant de passer la main à un autre contexte. Ce 
- * dernier étant déterminé par l'ordonnancement.
- */
-void yield();
-
-/**
  * Installe les gestionnaires d’interruptions et initialise le matériel.
- * \param[in] f Fonction associé à l'interruption.
  */
-void start_sched(irq_handler_func_t f);
+void start_sched();
 
 
 #endif

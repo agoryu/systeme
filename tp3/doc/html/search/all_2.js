@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['switch_5fto_5fctx',['switch_to_ctx',['../context_8h.html#a270801200f90904ce50216f89621ff81',1,'context.c']]]
+  ['start_5fsched',['start_sched',['../context_8h.html#abd9c5ff62f4792f57292cf868ac2cf41',1,'context.c']]]
 ];

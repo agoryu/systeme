@@ -1,5 +1,5 @@
-Coroutine
-=========
+Ordonnancement sur interruptions
+================================
 
 # Auteur
 
@@ -9,11 +9,19 @@ Coroutine
 
 # Description
 
-La fonction *switch\_to\_ctx* permet d'échanger des contextes. Cela signifie
-que la méthode va passer d'une pile à une autre lors de l'exécution. Une 
-pile distincte pour ping, pong et pang.
+Le programme change de contexte avec un ordonnancement sur interruption.
 
-Le programme ne boucle plus à l'infini, mais se termine sur le main. Pour
-cela, nous avons conservé les registres *esp* et *ebp*, lors du premier
-appel à *switch\_to\_ctx* dans des variables globales.
+Dans notre exemple, le programme ne boucle plus à l'infini, mais se 
+termine sur le main. Nous conservons les registres *esp* et *ebp*, 
+lors du premierappel à *switch\_to\_ctx*.
+
+Pour illustrer les interruptions, nous avons utilisés la fonction sleep.
+Ce qui laisse le temps au programme de changer de contexte.
+
+## Output:
+
+	$ Aa1Bb2Cc3
+
+Le programme passe bien de fonction en fonction pendant leurs 
+execution.
 

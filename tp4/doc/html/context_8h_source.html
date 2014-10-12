@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Context: context.h Source File</title>
+<title>Semaphore: context.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Context
+   <div id="projectname">Semaphore
    </div>
   </td>
  </tr>
@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,43 +90,46 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="context_8h.html#a66f1553c140c74f3e436a7f6a59e4740">   18</a></span>&#160;<span class="preprocessor">#define CTX_MAGIC 0xCAFEBABE</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="context_8h.html#ae52656f9fb24d33d86fb2a1752ccc144">   24</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="context_8h.html#ae52656f9fb24d33d86fb2a1752ccc144">ctx_state_e</a> {CTX_INIT, CTX_EXQ, CTX_END};</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">typedef</span> void (func_t) (<span class="keywordtype">void</span>*);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="structctx__s.html">   34</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structctx__s.html">ctx_s</a> {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> * ctx_esp;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> * ctx_ebp;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ctx_state;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    func_t * ctx_f;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> * ctx_arg;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> * ctx_stack;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">unsigned</span> ctx_magic;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structctx__current__s.html">   47</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structctx__current__s.html">ctx_current_s</a> {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">struct </span><a class="code" href="structctx__s.html">ctx_s</a> * current;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">void</span> * esp_initial;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordtype">void</span> * ebp_initial;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">int</span> <a class="code" href="context_8h.html#a4b3ba7452f53264c24a280abc13d994d">init_ctx</a>(<span class="keyword">struct</span> <a class="code" href="structctx__s.html">ctx_s</a> * ctx, <span class="keywordtype">int</span> stack_size, func_t f, <span class="keywordtype">void</span> * arg);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> <a class="code" href="context_8h.html#a270801200f90904ce50216f89621ff81">switch_to_ctx</a> (<span class="keyword">struct</span> <a class="code" href="structctx__s.html">ctx_s</a> * ctx);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="structctx__s_html"><div class="ttname"><a href="structctx__s.html">ctx_s</a></div><div class="ttdef"><b>Definition:</b> context.h:34</div></div>
-<div class="ttc" id="context_8h_html_ae52656f9fb24d33d86fb2a1752ccc144"><div class="ttname"><a href="context_8h.html#ae52656f9fb24d33d86fb2a1752ccc144">ctx_state_e</a></div><div class="ttdeci">ctx_state_e</div><div class="ttdef"><b>Definition:</b> context.h:24</div></div>
-<div class="ttc" id="context_8h_html_a270801200f90904ce50216f89621ff81"><div class="ttname"><a href="context_8h.html#a270801200f90904ce50216f89621ff81">switch_to_ctx</a></div><div class="ttdeci">void switch_to_ctx(struct ctx_s *ctx)</div><div class="ttdoc">Fonction permettant d&#39;échanger des contextes. </div><div class="ttdef"><b>Definition:</b> context.c:23</div></div>
-<div class="ttc" id="structctx__current__s_html"><div class="ttname"><a href="structctx__current__s.html">ctx_current_s</a></div><div class="ttdef"><b>Definition:</b> context.h:47</div></div>
-<div class="ttc" id="context_8h_html_a4b3ba7452f53264c24a280abc13d994d"><div class="ttname"><a href="context_8h.html#a4b3ba7452f53264c24a280abc13d994d">init_ctx</a></div><div class="ttdeci">int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void *arg)</div><div class="ttdoc">Fonction permettant l&#39;initiation d&#39;un contexte. </div><div class="ttdef"><b>Definition:</b> context.c:5</div></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;hw.h&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="context_8h.html#a66f1553c140c74f3e436a7f6a59e4740">   19</a></span>&#160;<span class="preprocessor">#define CTX_MAGIC 0xCAFEBABE</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">extern</span> <span class="keyword">struct </span><a class="code" href="structctx__s.html">ctx_s</a> *current_ctx;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="context_8h.html#ae52656f9fb24d33d86fb2a1752ccc144">   27</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="context_8h.html#ae52656f9fb24d33d86fb2a1752ccc144">ctx_state_e</a> {CTX_INIT, CTX_EXQ, CTX_END, CTX_STP};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">typedef</span> void (func_t) (<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="structctx__s.html">   39</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structctx__s.html">ctx_s</a> {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordtype">void</span> * ctx_esp;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordtype">void</span> * ctx_ebp;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ctx_state;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  func_t * ctx_f;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordtype">void</span> * ctx_arg;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordtype">void</span> * ctx_stack;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">unsigned</span> ctx_magic;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">struct </span><a class="code" href="structctx__s.html">ctx_s</a> * next;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">struct </span><a class="code" href="structctx__s.html">ctx_s</a> * ctx_sem_next;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">int</span> <a class="code" href="context_8h.html#ab74485d9a6142a295878a5517a606021">create_ctx</a>(<span class="keywordtype">int</span> stack_size, func_t f, <span class="keywordtype">void</span> * args);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">void</span> <a class="code" href="context_8h.html#a58c8b2ad0ea491a6642e5e1cbd358c89">yield</a>();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">void</span> <a class="code" href="context_8h.html#aea3045ac46b7cb4307196f90fda80314">start_sched</a>(irq_handler_func_t f);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="context_8h_html_a58c8b2ad0ea491a6642e5e1cbd358c89"><div class="ttname"><a href="context_8h.html#a58c8b2ad0ea491a6642e5e1cbd358c89">yield</a></div><div class="ttdeci">void yield()</div><div class="ttdef"><b>Definition:</b> context.c:159</div></div>
+<div class="ttc" id="structctx__s_html"><div class="ttname"><a href="structctx__s.html">ctx_s</a></div><div class="ttdef"><b>Definition:</b> context.h:39</div></div>
+<div class="ttc" id="context_8h_html_ab74485d9a6142a295878a5517a606021"><div class="ttname"><a href="context_8h.html#ab74485d9a6142a295878a5517a606021">create_ctx</a></div><div class="ttdeci">int create_ctx(int stack_size, func_t f, void *args)</div><div class="ttdef"><b>Definition:</b> context.c:138</div></div>
+<div class="ttc" id="context_8h_html_aea3045ac46b7cb4307196f90fda80314"><div class="ttname"><a href="context_8h.html#aea3045ac46b7cb4307196f90fda80314">start_sched</a></div><div class="ttdeci">void start_sched(irq_handler_func_t f)</div><div class="ttdef"><b>Definition:</b> context.c:166</div></div>
+<div class="ttc" id="context_8h_html_ae52656f9fb24d33d86fb2a1752ccc144"><div class="ttname"><a href="context_8h.html#ae52656f9fb24d33d86fb2a1752ccc144">ctx_state_e</a></div><div class="ttdeci">ctx_state_e</div><div class="ttdef"><b>Definition:</b> context.h:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 27 2014 09:41:32 for Context by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 12 2014 17:28:28 for Semaphore by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

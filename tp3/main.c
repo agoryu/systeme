@@ -20,60 +20,38 @@ int main(int argc, char *argv[])
     perror("Erreur creation de context");
     exit(EXIT_FAILURE);
   }
-  start_sched(yield);
-  /*yield();*/
+  start_sched();
 
   printf("\nRetour au main\n");
-
-  if( ! create_ctx(STACK_SIZE, f_ping, NULL)){
-    perror("Erreur creation de context");
-    exit(EXIT_FAILURE);
-  }
-
-  if( ! create_ctx(STACK_SIZE, f_pong, NULL)){
-    perror("Erreur creation de context");
-    exit(EXIT_FAILURE);
-  }
-
-  if( ! create_ctx(STACK_SIZE, f_pang, NULL)){
-    perror("Erreur creation de context");
-    exit(EXIT_FAILURE);
-  }
-
-  /*yield();*/
-
-  printf("\nFin du programme dans le main\n");
 
   exit(EXIT_SUCCESS);
 }
 
 void f_ping(void *args)
 {
-
-  printf("A") ;
-  /*yield();*/
-  printf("B") ;
-  /*yield();*/
-  printf("C") ;
-  /*yield();*/
+	  printf("A") ;
+	  sleep(2);
+	  printf("B") ;
+	  sleep(2);
+	  printf("C") ;
 
 }
 
 void f_pong(void *args)
 {
-  printf("1") ;
-  /*yield();*/
-  printf("2") ;
-  /*yield();*/
+	  printf("1") ;
+	  sleep(2);
+	  printf("2") ;
+	  sleep(2);
+	  printf("3");
 
 }
 
 void f_pang(void *args)
 {
-  printf("a") ;
-  /*yield();*/
-  printf("b") ;
-  /*yield();*/
-  printf("c") ;
-  /*yield();*/
+	  printf("a") ;
+	  sleep(2);
+	  printf("b") ;
+	  sleep(2);
+	  printf("c") ;
 } 
