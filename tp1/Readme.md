@@ -21,8 +21,8 @@ Le programme display_stack affiche la pile des fonctions appelées.
 ## Try/Catch
 
 L'implémantation des fonctions try et throw permet au programme de ne pas 
-refaire toutes les étapes d'une fonction récurcive en cas d'erreur ou 
-d'un cas qui n'est pas interessant.
+refaire toutes les étapes d'une fonction récurcive s'il y a une erreur ou 
+dans un cas qui n'est pas interessant pour l'algorithme.
 
 Ces deux fonctions permettent de déplacer le pied et la tête du registre afin 
 de pointer sur une précédente partie du code.

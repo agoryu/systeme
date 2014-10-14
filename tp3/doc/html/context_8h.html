@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Context: context.h File Reference</title>
+<title>Ordonnancement sur instanciations: context.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Context
+   <div id="projectname">Ordonnancement sur instanciations
    </div>
   </td>
  </tr>
@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -95,14 +96,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br/>
 <code>#include &lt;stdio.h&gt;</code><br/>
 <code>#include &lt;assert.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include &quot;hw.h&quot;</code><br/>
 </div>
 <p><a href="context_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structctx__s.html">ctx_s</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structctx__current__s.html">ctx_current_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -128,12 +129,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4b3ba7452f53264c24a280abc13d994d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="context_8h.html#a4b3ba7452f53264c24a280abc13d994d">init_ctx</a> (struct <a class="el" href="structctx__s.html">ctx_s</a> *ctx, int stack_size, func_t f, void *arg)</td></tr>
-<tr class="memdesc:a4b3ba7452f53264c24a280abc13d994d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction permettant l'initiation d'un contexte.  <a href="#a4b3ba7452f53264c24a280abc13d994d">More...</a><br/></td></tr>
-<tr class="separator:a4b3ba7452f53264c24a280abc13d994d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a270801200f90904ce50216f89621ff81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="context_8h.html#a270801200f90904ce50216f89621ff81">switch_to_ctx</a> (struct <a class="el" href="structctx__s.html">ctx_s</a> *ctx)</td></tr>
-<tr class="memdesc:a270801200f90904ce50216f89621ff81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction permettant d'échanger des contextes.  <a href="#a270801200f90904ce50216f89621ff81">More...</a><br/></td></tr>
-<tr class="separator:a270801200f90904ce50216f89621ff81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab74485d9a6142a295878a5517a606021"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="context_8h.html#ab74485d9a6142a295878a5517a606021">create_ctx</a> (int stack_size, func_t f, void *args)</td></tr>
+<tr class="separator:ab74485d9a6142a295878a5517a606021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd9c5ff62f4792f57292cf868ac2cf41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="context_8h.html#abd9c5ff62f4792f57292cf868ac2cf41">start_sched</a> ()</td></tr>
+<tr class="separator:abd9c5ff62f4792f57292cf868ac2cf41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Gestionnaire de contexte. </p>
@@ -154,19 +153,13 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a4b3ba7452f53264c24a280abc13d994d"></a>
+<a class="anchor" id="ab74485d9a6142a295878a5517a606021"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int init_ctx </td>
+          <td class="memname">int create_ctx </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structctx__s.html">ctx_s</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>stack_size</em>, </td>
         </tr>
@@ -180,7 +173,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>arg</em>&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -189,49 +182,39 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Fonction permettant l'initiation d'un contexte. </p>
+<p>Crée un nouveau contexte et le mémorise dans une structure chaînée circulaire.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>contexte à initialiser </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">stack_size</td><td>taille du contexte à initialiser </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>fonctione exécuter sur la pile </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg</td><td>arguement de la fonctione lancé par le contexte </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stack_size</td><td>La taille de la pile pour le contexte créé. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>La fonction du contexte. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>L'argument de la fonction du contexte. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 en cas d'erreur et 1 sinon </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 en cas d'erreur, sinon 1. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a270801200f90904ce50216f89621ff81"></a>
+<a class="anchor" id="abd9c5ff62f4792f57292cf868ac2cf41"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void switch_to_ctx </td>
+          <td class="memname">void start_sched </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structctx__s.html">ctx_s</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Fonction permettant d'échanger des contextes. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ctx</td><td>context qui sera actif </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Installe les gestionnaires d’interruptions et initialise le matériel. </p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 27 2014 09:41:32 for Context by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 3 2014 14:35:48 for Ordonnancement sur instanciations by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

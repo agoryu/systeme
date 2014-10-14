@@ -16,6 +16,13 @@ int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args);
  */
 void switch_to_ctx(struct ctx_s *ctx);
 
+/**
+ * Permet au contexte courant de passer la main à un autre contexte. Ce 
+ * dernier étant déterminé par l'ordonnancement.
+ */
+void yield();
+
+
 void start_ctx();
 
 static struct ctx_s *ctx_ring = NULL;
@@ -24,9 +31,6 @@ static struct ctx_s *current_ctx = NULL;
 static int first_call = 1;
 void* initial_esp;
 void* initial_ebp;
-
-
-
 
 int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
 
@@ -50,15 +54,19 @@ int init_ctx(struct ctx_s *ctx, int stack_size, func_t f, void* args){
 void switch_to_ctx(struct ctx_s *ctx){
 
   /* si ctx est null on retourne au main */
-  if (!ctx) {
+  if (ctx == ctx->next) {
     first_call = 1;
-    current_ctx = (struct ctx_s*)0;
+    current_ctx = NULL;
+    ctx_ring = NULL;
+
     asm("movl %0, %%esp"
 	: 
 	:"r" (initial_esp));
     asm("movl %0, %%ebp"
 	:
 	:"r" (initial_ebp));
+
+    return;
   }
 
   if(ctx->ctx_state == CTX_END) {
@@ -113,7 +121,8 @@ void start_ctx() {
     /* retour au main */
     if(current_ctx == current_ctx->next) {
       first_call = 1;
-      current_ctx = (struct ctx_s*)0;
+      current_ctx = NULL;
+      ctx_ring = NULL;
       asm("movl %0, %%esp"
 	  : 
 	  :"r" (initial_esp));
@@ -152,5 +161,11 @@ void yield() {
     switch_to_ctx(current_ctx->next);
   else /* premier passage */
     switch_to_ctx(ctx_ring);
+}
+
+void start_sched() {
+	setup_irq(TIMER_IRQ, yield);
+	start_hw();
+	yield();
 }
 

@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <unistd.h>
+#include "hw.h"
 
 /**
  * \brief Define permettant de reconnaitre le contexte en cours 
@@ -57,10 +59,9 @@ struct ctx_s {
 int create_ctx(int stack_size, func_t f, void * args);
 
 /**
- * Permet au contexte courant de passer la main à un autre contexte. Ce 
- * dernier étant déterminé par l'ordonnancement.
+ * Installe les gestionnaires d’interruptions et initialise le matériel.
  */
-void yield();
+void start_sched();
 
 
 #endif
