@@ -1,9 +1,0 @@
-#include "drive.h"
-
-int main() {
-
-	char buffer[SECTOR_SIZE];
-	init_hardware("disque.ini");
-	read_sector(0, 0, buffer);
-	print_buffer(buffer, SECTOR_SIZE);
-}
