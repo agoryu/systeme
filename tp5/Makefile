@@ -1,4 +1,4 @@
-ROOTDIR =../libhardware
+ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
 CFLAGS	= -Wall -ansi -pedantic -m32 -ansi
