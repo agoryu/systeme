@@ -50,8 +50,7 @@ void read_sector_n(unsigned int cylinder,
 		   unsigned char* buffer, 
 		   size_t n){
 
-  int secteur_size;
-  int tmp, i;  
+  int i;  
 
 
   if( !seek_sector(cylinder, sector) ){
@@ -67,14 +66,7 @@ void read_sector_n(unsigned int cylinder,
 
 
   /* exploiter les donnees de MASTERBUFFER */
-  _out(HDA_CMDREG, CMD_DSKINFO);
-
-  tmp = _in(HDA_DATAREGS+4);
-  tmp = tmp<<8;
-  printf("%d\n", tmp);
-  secteur_size = tmp + _in(HDA_DATAREGS+5);
-
-  for(i=0; i<secteur_size && i<n; i++){
+  for(i=0; i<HDA_SECTORSIZE && i<n; i++){
     buffer[i] = (unsigned char)MASTERBUFFER[i];
   }
 }

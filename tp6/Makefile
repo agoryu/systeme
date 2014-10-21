@@ -9,7 +9,7 @@ INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
 BINARIES= dmps frmt
-OBJECTS	= drive.o dmps.o frmt.o mbr.o
+OBJECTS	= drive.o dmps.o frmt.o
 
 
 
@@ -24,8 +24,8 @@ check-syntax:
 
 
 # Deuxieme couche: gestion de volumes
-mbr.o: 	drive.o mbr.h mbr.c
-	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+#mbr.o: 	drive.o mbr.h mbr.c
+#	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 
 # Premiere couche: acces materiel

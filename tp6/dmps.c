@@ -9,6 +9,7 @@ int main(int argc, char* argv[]){
 
   unsigned int cylinder, sector;
   unsigned char* buffer = malloc(HDA_SECTORSIZE);
+  unsigned char* buffer2 = malloc(HDA_SECTORSIZE);
   int i;
 
   if(argc!=3 || (argc>1  && strcmp(argv[1], "-h")==0) ){
@@ -33,14 +34,16 @@ int main(int argc, char* argv[]){
   /* Allows all IT */
   _mask(1);
 
-  read_sector(cylinder, sector, buffer);
+  buffer = "Bonjours le monde";
+  write_sector_n(cylinder, sector, buffer, 8);
+  read_sector_n(cylinder, sector, buffer2, 8);
 
   if(!buffer){
     perror("Couldn't read hardware\n");
     exit(EXIT_FAILURE);
   } 
 
-  printf("%s\n", buffer);
+  printf("%s\n", buffer2);
 
   free(buffer);
 
