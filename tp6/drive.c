@@ -41,6 +41,14 @@ int seek_sector(unsigned int cylinder, unsigned int sector){
 
 
 void read_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer){
+  read_sector_n(cylinder, sector, buffer, HDA_SECTORSIZE);
+}
+
+
+void read_sector_n(unsigned int cylinder, 
+		   unsigned int sector, 
+		   unsigned char* buffer, 
+		   size_t n){
 
   int secteur_size;
   int tmp, i;  
@@ -63,20 +71,26 @@ void read_sector(unsigned int cylinder, unsigned int sector, unsigned char* buff
 
   tmp = _in(HDA_DATAREGS+4);
   tmp = tmp<<8;
+  printf("%d\n", tmp);
   secteur_size = tmp + _in(HDA_DATAREGS+5);
 
-  for(i=0; i<secteur_size; i++){
+  for(i=0; i<secteur_size && i<n; i++){
     buffer[i] = (unsigned char)MASTERBUFFER[i];
   }
-
-  buffer[++i] = EOF;
 }
 
 
 void write_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer){
-    
+  write_sector_n(cylinder, sector, buffer, HDA_SECTORSIZE);
+}
+
+
+void write_sector_n(unsigned int cylinder, 
+		    unsigned int sector, 
+		    unsigned char* buffer,
+		    size_t n){
+  
   int i;
-  int length;  
 
   if( !seek_sector(cylinder, sector) ){
     buffer = NULL;
@@ -84,9 +98,7 @@ void write_sector(unsigned int cylinder, unsigned int sector, unsigned char* buf
   }
 
   /* ecrire les donnees dans MASTERBUFFER */
-  length = strlen((char*)buffer);
-
-  for(i=0; i<length || i< HDA_SECTORSIZE; i++){
+  for(i=0; i<HDA_SECTORSIZE && i<n; i++){
     MASTERBUFFER[i] = buffer[i];
   }
 
@@ -95,6 +107,7 @@ void write_sector(unsigned int cylinder, unsigned int sector, unsigned char* buf
   _out(HDA_DATAREGS, 1);
   _out(HDA_CMDREG, CMD_WRITE);
   _sleep(HDA_IRQ);
+
 }
 
 

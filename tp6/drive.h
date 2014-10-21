@@ -21,7 +21,6 @@
 #define HDA_PON_DELAY   30
 #define HDA_POFF_DELAY  30 
 
-#define SECTOR_SIZE 1024
 
 int is_valid_cylinder(unsigned int cylinder);
 
@@ -31,7 +30,17 @@ int seek_sector(unsigned int cylinder, unsigned int sector);
 
 void read_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer);
 
+void read_sector_n(unsigned int cylinder, 
+		   unsigned int sector, 
+		   unsigned char* buffer, 
+		   size_t n);
+
 void write_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer);
+
+void write_sector_n(unsigned int cylinder, 
+		    unsigned int sector, 
+		    unsigned char* buffer,
+		    size_t n);
 
 void format_sector(unsigned int cylinder, 
 		   unsigned int sector, 

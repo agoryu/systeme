@@ -1,7 +1,7 @@
 ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
-CFLAGS	= -Wall -ansi -pedantic -m32 -ansi
+CFLAGS	= -Wall -ansi -pedantic -m32 -ansi -std=c11
 CFLAGS	+= -D_XOPEN_SOURCE=500
 CFLAGS  += -g
 LIBDIR  = $(ROOTDIR)/lib
@@ -9,7 +9,7 @@ INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
 BINARIES= dmps frmt
-OBJECTS	= drive.o dmps.o frmt.o
+OBJECTS	= drive.o dmps.o frmt.o mbr.o
 
 
 
@@ -22,6 +22,13 @@ check-syntax:
 	gcc $(CFLAGS) -o nul -S $(INCDIR) ${CHK_SOURCES}
 # -------------------------------------------
 
+
+# Deuxieme couche: gestion de volumes
+mbr.o: 	drive.o mbr.h mbr.c
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+
+# Premiere couche: acces materiel
 frmt:	frmt.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
