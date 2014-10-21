@@ -7,7 +7,7 @@ int load_mbr() {
   char reponse_utilisateur;
 
   /* lecture du mbr */
-  read_n_sector(0, 0, (unsigned char*)mbr, sizeof(stuct mbr_s));
+  read_sector_n(0, 0, (unsigned char*)mbr, sizeof(stuct mbr_s));
 
   /* si le mbr est plus grand que le secteur on pourra pas le mettre dedans */
   if(sizeof(struct mbr_s) > SECTOR_SIZE) {
@@ -31,7 +31,7 @@ int load_mbr() {
 
 int save_mbr() {
   
-  write_n_sector(0, 0, (unsigned char*)mbr, sizeof(struct mbr_s));
+  write_sector_n(0, 0, (unsigned char*)mbr, sizeof(struct mbr_s));
   return 1;
 }
 
