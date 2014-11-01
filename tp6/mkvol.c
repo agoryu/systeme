@@ -1,58 +1,86 @@
 #include "mbr.h"
 
-int main(int argc, char**argv)
-{
+void usage(){
+  printf("Utilisation: mkvol [ARGUMENT]\n");
+  printf("\n");
+  printf("Permet la creation d'un volume");
+  printf("\n");
+  printf(" -s \t l'argument qui suit est le nombre de blocs pour le volume\n");
+  printf(" -fc \t l'argument qui suit est le cylindre a partir duquel le volume commence\n");
+  printf(" -fs \t l'argument qui suit est le secteur a partir duquel le volume commence\n");
+  printf("\n");
+  printf("Exemples:\n");
+  printf("$mkvol -s nb_bloc -fc num_premier_cylindre -fs num_premier_secteur\n");
+  printf("$mkvol -fc 0 -fs 1 -s 12\n");
+}
+
+int main(int argc, char**argv){
 	
-	int size, cylindre, secteur;
-	int i;
-	unsigned char* buffer;
+  unsigned fc = HDA_MAXCYLINDER+1;
+  unsigned fs = HDA_MAXSECTOR+1;
+  unsigned nb_bloc = 0;
+  int i;
 
-	size = cylindre = secteur = -1;
 
-	/* vérification des arguments entree par l'utilisateur */
-	if(argc < 7)
-	{
-		printf("Il vous manque un argument pour créer votre volume\n");
-		return EXIT_FAILURE;
-	}
+  /* vérification des arguments entree par l'utilisateur */
+  if(argc != 7 || (argc>1  && strcmp(argv[1], "-h")==0)){
+    usage();
+    exit(EXIT_SUCCESS);
+  }
 
-	for(i=1; i<argc-1; i++)
-	{
-		if(strcmp(argv[i], "-s") == 1)
-		{
-			size = atoi(argv[i+1]);
-			if(size == NULL)
-				printf("La taille du volume n'est pas du bon type\n");
-		}
+  if(!load_mbr()){
+    perror("Erreur lors du chargement du Master Boot Record.");
+    exit(EXIT_FAILURE);
+  }
 
-		if(strcmp(argv[i], "-fc") == 1)
-		{
-			cylindre = atoi(argv[i+1]);
-			if(cylindre == NULL)
-				printf("La valeur pour le cylindre n'est pas du bon type\n");
-		}
-		if(strcmp(argv[i], "-fs") == 1)
-		{
-			secteur = atoi(argv[i+1]);
-			if(cylindre == NULL)
-				printf("La valeur pour le secteur n'est pas du bon type\n");
-		}
-	}
+  /* recuperer les arguments */
+  for(i=1; i<argc; i++){
 
-	if(size == -1 || secteur == -1 || cylindre == -1) {
-		printf("Il manque un argument pour pouvoir créer le volume\n");
-		return EXIT_FAILURE;
-	}
+    if(strcmp(argv[i], "-s") == 0){
+      nb_bloc = atoi(argv[i+1]);
+    }
 
-	/* chargement du mbr */
-	load_mbr();
+    if(strcmp(argv[i], "-fc") == 0){
+      fc = atoi(argv[i+1]);
 
-	/* allocation du buffer avec la taille fournit par l'utilisateur */
-	buffer = malloc(sizeof(unsigned char) * size);
+    }
 
-	write_bloc(const unsigned int vol, size, buffer);
+    if(strcmp(argv[i], "-fs") == 0){
+      fs = atoi(argv[i+1]);
+    }
+  }
 
-	/* sauvegarde de tous les changements effectué sur le mbr */
-	save_mbr();
-	return EXIT_SUCCESS;
+  /* destion des erreur d'arguments */
+  if(nb_bloc <= 0 || nb_bloc<(HDA_MAXCYLINDER*HDA_MAXSECTOR)){
+    perror("La taille du volume impossible.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  if(fc<HDA_MAXCYLINDER){
+    perror("Cylindre possible.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  if(fs<HDA_MAXSECTOR){
+    perror("Secteur possible.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  if(fc==0 && fs==0) {
+    perror("Possible de creer un volume a la place du Master Boot Record.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  /* chargement du mbr */
+  load_mbr();
+
+  /* creation du volume */
+  if(!mkvol(fc, fs, nb_bloc)){
+    perror("Erreur lors de la creation du volume.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  /* sauvegarde de tous les changements effectué sur le mbr */
+  save_mbr();
+  return EXIT_SUCCESS;
 }

@@ -1,4 +1,4 @@
-ROOTDIR =/home/enseign/ASE
+ROOTDIR =../libhardware
 
 CC	= gcc
 CFLAGS	= -Wall -ansi -pedantic -m32 -ansi -std=c11
@@ -8,8 +8,8 @@ LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
-BINARIES= dmps frmt
-OBJECTS	= drive.o dmps.o frmt.o mbr.o
+BINARIES= dmps frmt mkvol
+OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o
 
 
 
@@ -24,6 +24,12 @@ check-syntax:
 
 
 # Deuxieme couche: gestion de volumes
+mkvol: 	mkvol.o mbr.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+mkvol.o:mbr.h mkvol.c
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
 mbr.o: 	drive.o mbr.h mbr.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 

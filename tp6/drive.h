@@ -1,5 +1,5 @@
-#ifndef DRIVE_H
-#define DRIVE_H
+#ifndef _DRIVE_H_
+#define _DRIVE_H_
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,31 +22,35 @@
 #define HDA_POFF_DELAY  30 
 
 
-int is_valid_cylinder(unsigned int cylinder);
+int is_valid_cylinder(const unsigned int cylinder);
 
-int is_valid_sector(unsigned int sector);
+int is_valid_sector(const unsigned int sector);
 
-int seek_sector(unsigned int cylinder, unsigned int sector);
+int seek_sector(const unsigned int cylinder, const unsigned int sector);
 
-void read_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer);
+void read_sector(const unsigned int cylinder, 
+		 const unsigned int sector, 
+		 unsigned char* buffer);
 
-void read_sector_n(unsigned int cylinder, 
-		   unsigned int sector, 
+void read_sector_n(const unsigned int cylinder, 
+		   const unsigned int sector, 
 		   unsigned char* buffer, 
-		   size_t n);
+		   const size_t n);
 
-void write_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer);
+void write_sector(const unsigned int cylinder, 
+		  const unsigned int sector, 
+		  const unsigned char* buffer);
 
-void write_sector_n(unsigned int cylinder, 
-		    unsigned int sector, 
-		    unsigned char* buffer,
-		    size_t n);
+void write_sector_n(const unsigned int cylinder, 
+		    const unsigned int sector, 
+		    const unsigned char* buffer,
+		    const size_t n);
 
-void format_sector(unsigned int cylinder, 
-		   unsigned int sector, 
-		   unsigned int nsector, 
-		   unsigned int value);
+void format_sector(const unsigned int cylinder, 
+		   const unsigned int sector, 
+		   const unsigned int nsector, 
+		   const unsigned int value);
 
-void format_all(unsigned int value);
+void format_all(const unsigned int value);
 
 #endif

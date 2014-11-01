@@ -1,7 +1,7 @@
 #include "drive.h"
 
 
-int is_valid_cylinder(unsigned int cylinder){
+int is_valid_cylinder(const unsigned int cylinder){
   if( cylinder<0 || cylinder>=HDA_MAXCYLINDER ){
     perror("Invalid cylinder\n");
     return 0;
@@ -10,7 +10,7 @@ int is_valid_cylinder(unsigned int cylinder){
 }
 
 
-int is_valid_sector(unsigned int sector){
+int is_valid_sector(const unsigned int sector){
   if( sector<0   || sector>=HDA_MAXSECTOR ){
     perror("Invalid sector\n");
     return 0;
@@ -19,7 +19,7 @@ int is_valid_sector(unsigned int sector){
 }
 
 
-int seek_sector(unsigned int cylinder, unsigned int sector){
+int seek_sector(const unsigned int cylinder, const unsigned int sector){
 
   if(!is_valid_cylinder(cylinder) || !is_valid_sector(sector)){
     return 0;
@@ -40,15 +40,17 @@ int seek_sector(unsigned int cylinder, unsigned int sector){
 }
 
 
-void read_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer){
+void read_sector(const unsigned int cylinder, 
+		 const unsigned int sector, 
+		 unsigned char* buffer){
   read_sector_n(cylinder, sector, buffer, HDA_SECTORSIZE);
 }
 
 
-void read_sector_n(unsigned int cylinder, 
-		   unsigned int sector, 
+void read_sector_n(const unsigned int cylinder, 
+		   const unsigned int sector, 
 		   unsigned char* buffer, 
-		   size_t n){
+		   const size_t n){
 
   int i;  
 
@@ -72,15 +74,17 @@ void read_sector_n(unsigned int cylinder,
 }
 
 
-void write_sector(unsigned int cylinder, unsigned int sector, unsigned char* buffer){
+void write_sector(const unsigned int cylinder, 
+		  const unsigned int sector, 
+		  const unsigned char* buffer){
   write_sector_n(cylinder, sector, buffer, HDA_SECTORSIZE);
 }
 
 
-void write_sector_n(unsigned int cylinder, 
-		    unsigned int sector, 
-		    unsigned char* buffer,
-		    size_t n){
+void write_sector_n(const unsigned int cylinder, 
+		    const unsigned int sector, 
+		    const unsigned char* buffer,
+		    const size_t n){
   
   int i;
 
@@ -103,10 +107,10 @@ void write_sector_n(unsigned int cylinder,
 }
 
 
-void format_sector(unsigned int cylinder, 
-		   unsigned int sector, 
-		   unsigned int nsector, 
-		   unsigned int value){
+void format_sector(const unsigned int cylinder, 
+		   const unsigned int sector, 
+		   const unsigned int nsector, 
+		   const unsigned int value){
   
   if( !seek_sector(cylinder, sector) ){
     return;
@@ -124,7 +128,7 @@ void format_sector(unsigned int cylinder,
 
 }
 
-void format_all(unsigned int value){
+void format_all(const unsigned int value){
 
   unsigned int i, j;
 
