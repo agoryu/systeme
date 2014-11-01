@@ -26,6 +26,5 @@ struct mbr_s {
   unsigned mbr_n_vol;
   unsigned mbr_magic;
 }
-  
 
 #endif

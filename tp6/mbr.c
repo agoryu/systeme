@@ -9,7 +9,7 @@ int load_mbr() {
   /* lecture du mbr */
   read_sector_n(0, 0, (unsigned char*)mbr, sizeof(stuct mbr_s));
 
-  /* si le mbr est plus grand que le secteur on pourra pas le mettre dedans */
+  /* si le mbr est plus grand que le secteur on ne pourra pas le mettre dedans */
   if(sizeof(struct mbr_s) > SECTOR_SIZE) {
     printf("Erreur : le secteur size est plus petit que la taille du mbr");
     return 0;
