@@ -113,10 +113,56 @@ void format_vol(const unsigned int vol) {
 }
 
 
-int mkvol(const unsigned cylindre, 
+int make_vol(const unsigned cylinder, 
 	  const unsigned sector, 
-	  const unsigned nb_bloc){
+	  const unsigned nbloc){
 
-  return 0;
+  if(mbr.mbr_n_vol >= MAX_VOL){
+    perror("Impossible de creer un nouveau volume.\n");
+    perror("Le nombre de volume sur le disque est a son maximum.\n");
+    return 0;
+  }
+
+  mbr.mbr_vol[mbr.mbr_n_vol].vol_first_cylinder = cylinder;
+  mbr.mbr_vol[mbr.mbr_n_vol].vol_first_sector = sector;
+  mbr.mbr_vol[mbr.mbr_n_vol].vol_n_sector = nbloc;
+  mbr.mbr_vol[mbr.mbr_n_vol].vol_type = VOLT_PR;
+
+  mbr.mbr_n_vol++;
+
+  return 1;
 }
 
+void display_vol(){
+  int i, nvol;
+
+  if(mbr.mbr_n_vol == 0){
+    printf("Aucun volume sur le disque.\n");
+    return;
+  }
+  
+  nvol = mbr.mbr_n_vol;
+
+  printf("Il y a %d volume(s) sur le disque.\n\n", nvol);
+
+  for(i=0; i<nvol; i++){
+    printf("Volume %d:\n", i+1);
+    printf("\t - Commence au cylindre %d.\n", mbr.mbr_vol[i].vol_first_cylinder); 
+    printf("\t - Commence au secteur %d.\n", mbr.mbr_vol[i].vol_first_sector);
+    printf("\t - Nombre de blocs : %d.", mbr.mbr_vol[i].vol_n_sector);
+    printf("\t - Type de volume: ");
+    switch(mbr.mbr_vol[i].vol_type){
+    case VOLT_PR:
+      printf("PRIMAIRE.\n");
+      break;
+    case VOLT_SND:
+      printf("SECONDAIRE.\n");
+      break;
+    case VOLT_OTHER:
+      printf("AUTRE.\n");
+      break;
+    }
+    printf("\n");
+  }
+
+}

@@ -10,8 +10,8 @@ void usage(){
   printf(" -fs \t l'argument qui suit est le secteur a partir duquel le volume commence\n");
   printf("\n");
   printf("Exemples:\n");
-  printf("$mkvol -s nb_bloc -fc num_premier_cylindre -fs num_premier_secteur\n");
-  printf("$mkvol -fc 0 -fs 1 -s 12\n");
+  printf("\t$mkvol -s nb_bloc -fc num_premier_cylindre -fs num_premier_secteur\n");
+  printf("\t$mkvol -fc 0 -fs 1 -s 12\n");
 }
 
 int main(int argc, char**argv){
@@ -28,6 +28,7 @@ int main(int argc, char**argv){
     exit(EXIT_SUCCESS);
   }
 
+  /* chargement du mbr */
   if(!load_mbr()){
     perror("Erreur lors du chargement du Master Boot Record.");
     exit(EXIT_FAILURE);
@@ -50,7 +51,7 @@ int main(int argc, char**argv){
     }
   }
 
-  /* destion des erreur d'arguments */
+  /* gestion des erreur d'arguments */
   if(nb_bloc <= 0 || nb_bloc<(HDA_MAXCYLINDER*HDA_MAXSECTOR)){
     perror("La taille du volume impossible.\n");
     exit(EXIT_FAILURE);
@@ -71,16 +72,14 @@ int main(int argc, char**argv){
     exit(EXIT_FAILURE);
   }
 
-  /* chargement du mbr */
-  load_mbr();
-
   /* creation du volume */
-  if(!mkvol(fc, fs, nb_bloc)){
+  if(!make_vol(fc, fs, nb_bloc)){
     perror("Erreur lors de la creation du volume.\n");
     exit(EXIT_FAILURE);
   }
 
   /* sauvegarde de tous les changements effectué sur le mbr */
   save_mbr();
-  return EXIT_SUCCESS;
+
+  exit(EXIT_SUCCESS);
 }

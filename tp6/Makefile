@@ -8,8 +8,8 @@ LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
-BINARIES= dmps frmt mkvol
-OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o
+BINARIES= dmps frmt mkvol dvol
+OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o
 
 
 
@@ -27,7 +27,13 @@ check-syntax:
 mkvol: 	mkvol.o mbr.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
+dvol: 	dvol.o mbr.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
 mkvol.o:mbr.h mkvol.c
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+dvol.o:mbr.h dvol.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 mbr.o: 	drive.o mbr.h mbr.c
@@ -51,10 +57,14 @@ drive.o: drive.h drive.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 
-.PHONY:	clean realclean
+
+.PHONY:	clean realclean doc
 
 clean:
 	$(RM) *~ *.o \#*\# nul *.gch
 
 realclean: clean
 	$(RM) $(BINARIES) vdiskA.bin vdiskB.bin
+
+doc:
+	doxygen doxygen_log.txt
