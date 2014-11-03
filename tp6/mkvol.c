@@ -28,6 +28,12 @@ int main(int argc, char**argv){
     exit(EXIT_SUCCESS);
   }
 
+  /* init hardware */
+  if(!init_hardware("hardware.ini")){
+    perror("Initialization error\n");
+    exit(EXIT_FAILURE);
+  }
+
   /* chargement du mbr */
   if(!load_mbr()){
     perror("Erreur lors du chargement du Master Boot Record.");

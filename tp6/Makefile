@@ -25,19 +25,19 @@ check-syntax:
 
 
 # Deuxieme couche: gestion de volumes
-mkvol: 	mkvol.o mbr.o
+mkvol: 	mkvol.o mbr.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-dvol: 	dvol.o mbr.o
+dvol: 	dvol.o mbr.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-mkvol.o:mbr.h mkvol.c
+mkvol.o: mbr.h mkvol.c drive.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
-dvol.o:mbr.h dvol.c
+dvol.o:	mbr.h dvol.c drive.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
-mbr.o: 	drive.o mbr.h mbr.c
+mbr.o:  mbr.h mbr.c drive.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 
@@ -48,10 +48,10 @@ frmt:	frmt.o drive.o
 dmps: 	dmps.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-frmt.o:  drive.h  frmt.c
+frmt.o: drive.h  frmt.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
-dmps.o:  drive.h  dmps.c
+dmps.o: drive.h  dmps.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 drive.o: drive.h drive.c
