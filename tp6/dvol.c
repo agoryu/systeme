@@ -1,5 +1,9 @@
 #include "mbr.h"
 
+static void empty_it(){
+    return;
+}
+
 void usage(){
   printf("Utilisation: dvol\n");
   printf("\n");
@@ -11,6 +15,8 @@ void usage(){
 
 int main(int argc, char**argv){
 
+  int i;
+
   if(argc!=1){
     usage();
     exit(EXIT_SUCCESS);
@@ -21,6 +27,13 @@ int main(int argc, char**argv){
     perror("Initialization error\n");
     exit(EXIT_FAILURE);
   }
+
+  /* Interreupt handlers */
+  for(i=0; i<16; i++)
+    IRQVECTOR[i] = empty_it;
+
+  /* Allows all IT */
+  _mask(1);
 	
   /* chargement du mbr */
   if(!load_mbr()){

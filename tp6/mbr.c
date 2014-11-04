@@ -1,7 +1,28 @@
 #include "mbr.h"
 
 
-struct mbr_s mbr;
+static struct mbr_s mbr;
+
+
+/*
+ * retourne 1 si l'espace (a partir de cylinder et sector) est libre 
+ * sur nbloc blocs.
+ */
+int is_free_space(const unsigned cylinder, 
+		  const unsigned sector,
+		  const unsigned nbloc){
+  
+  /*
+
+    il y a un moyen de savoir si le volume qui commence a c et s de nb blocs 
+    commence sur un autre vol, fin sur un autre vol ou ecrase completement 
+    un autre volume :
+    -sans faire un boucle sur tout les secteur entre (c,s) et (c,s)+nbloc
+
+   */
+
+  return 0;
+}
 
 
 void init_mbr(){
@@ -16,7 +37,7 @@ int load_mbr() {
 
   /* si le mbr est plus grand que le secteur on ne pourra pas le mettre dedans */
   if(sizeof(struct mbr_s) > HDA_SECTORSIZE) {
-    perror("Erreur : le secteur size est plus petit que la taille du mbr");
+    fprintf(stderr, "Erreur : le secteur size est plus petit que la taille du mbr");
     return 0;
   }
 
@@ -26,20 +47,13 @@ int load_mbr() {
   /* premiere fois que le disque est utilisé */
   if(mbr.mbr_magic != MBR_MAGIC) {
 
-    do {
-      printf("Le disque est vierge, voulez-vous continuer les traitements? (y/n)");
-      reponse_utilisateur = getchar();
-
-      if(reponse_utilisateur!='y' || reponse_utilisateur!='n'){
-	printf("%c n'est pas un choix valide.\n", reponse_utilisateur);
-      }
-
-    } while(reponse_utilisateur!='y' || reponse_utilisateur!='n');
+    printf("Le disque est vierge, voulez-vous continuer les traitements? (y/n) ");
+    reponse_utilisateur = getchar();
     
     if(reponse_utilisateur == 'y'){
       init_mbr();
     } else {
-      printf("Chacun changement effectue sur le disque.\n");
+      printf("Aucun changement effectue sur le disque.\n");
       exit(EXIT_SUCCESS);
     }
   }
@@ -114,23 +128,32 @@ void format_vol(const unsigned int vol) {
 
 
 int make_vol(const unsigned cylinder, 
-	  const unsigned sector, 
-	  const unsigned nbloc){
+	     const unsigned sector, 
+	     const unsigned nbloc){
 
   if(mbr.mbr_n_vol >= MAX_VOL){
-    perror("Impossible de creer un nouveau volume.\n");
-    perror("Le nombre de volume sur le disque est a son maximum.\n");
+    fprintf(stderr, "Impossible de creer un nouveau volume.\n");
+    fprintf(stderr, "Le nombre de volume sur le disque est a son maximum.\n");
     return 0;
   }
 
-  mbr.mbr_vol[mbr.mbr_n_vol].vol_first_cylinder = cylinder;
-  mbr.mbr_vol[mbr.mbr_n_vol].vol_first_sector = sector;
-  mbr.mbr_vol[mbr.mbr_n_vol].vol_n_sector = nbloc;
-  mbr.mbr_vol[mbr.mbr_n_vol].vol_type = VOLT_PR;
+  if(is_free_space(cylinder, sector, nbloc)){
 
-  mbr.mbr_n_vol++;
+    mbr.mbr_vol[mbr.mbr_n_vol].vol_first_cylinder = cylinder;
+    mbr.mbr_vol[mbr.mbr_n_vol].vol_first_sector = sector;
+    mbr.mbr_vol[mbr.mbr_n_vol].vol_n_sector = nbloc;
+    mbr.mbr_vol[mbr.mbr_n_vol].vol_type = VOLT_PR;
+    
+    mbr.mbr_n_vol++;
 
-  return 1;
+    return 1;
+
+  }
+    
+  fprintf(stderr, "Impossible de creer un volume de %d blocs, ", nbloc);
+  fprintf(stderr, "au cylindre %d et secteur %d", cylinder, sector);
+  return 0;
+
 }
 
 void display_vol(){
@@ -149,7 +172,7 @@ void display_vol(){
     printf("Volume %d:\n", i+1);
     printf("\t - Commence au cylindre %d.\n", mbr.mbr_vol[i].vol_first_cylinder); 
     printf("\t - Commence au secteur %d.\n", mbr.mbr_vol[i].vol_first_sector);
-    printf("\t - Nombre de blocs : %d.", mbr.mbr_vol[i].vol_n_sector);
+    printf("\t - Nombre de blocs : %d.\n", mbr.mbr_vol[i].vol_n_sector);
     printf("\t - Type de volume: ");
     switch(mbr.mbr_vol[i].vol_type){
     case VOLT_PR:

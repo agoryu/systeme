@@ -1,5 +1,9 @@
 #include "mbr.h"
 
+static void empty_it(){
+    return;
+}
+
 void usage(){
   printf("Utilisation: mkvol [ARGUMENT]\n");
   printf("\n");
@@ -16,23 +20,30 @@ void usage(){
 
 int main(int argc, char**argv){
 	
-  unsigned fc = HDA_MAXCYLINDER+1;
-  unsigned fs = HDA_MAXSECTOR+1;
-  unsigned nb_bloc = 0;
+  unsigned fc = 0/*HDA_MAXCYLINDER+1*/;
+  unsigned fs = 1/*HDA_MAXSECTOR+1*/;
+  unsigned nb_bloc = 4/*0*/;
   int i;
 
 
   /* vérification des arguments entree par l'utilisateur */
-  if(argc != 7 || (argc>1  && strcmp(argv[1], "-h")==0)){
+  /*if(argc != 7 || (argc>1  && strcmp(argv[1], "-h")==0)){
     usage();
     exit(EXIT_SUCCESS);
-  }
+    }*/
 
   /* init hardware */
   if(!init_hardware("hardware.ini")){
     perror("Initialization error\n");
     exit(EXIT_FAILURE);
   }
+
+  /* Interreupt handlers */
+  for(i=0; i<16; i++)
+    IRQVECTOR[i] = empty_it;
+
+  /* Allows all IT */
+  _mask(1);
 
   /* chargement du mbr */
   if(!load_mbr()){
@@ -41,7 +52,7 @@ int main(int argc, char**argv){
   }
 
   /* recuperer les arguments */
-  for(i=1; i<argc; i++){
+  /*for(i=1; i<argc; i++){
 
     if(strcmp(argv[i], "-s") == 0){
       nb_bloc = atoi(argv[i+1]);
@@ -55,10 +66,10 @@ int main(int argc, char**argv){
     if(strcmp(argv[i], "-fs") == 0){
       fs = atoi(argv[i+1]);
     }
-  }
+    }*/
 
   /* gestion des erreur d'arguments */
-  if(nb_bloc <= 0 || nb_bloc<(HDA_MAXCYLINDER*HDA_MAXSECTOR)){
+  /*if(nb_bloc <= 0 || nb_bloc<(HDA_MAXCYLINDER*HDA_MAXSECTOR)){
     perror("La taille du volume impossible.\n");
     exit(EXIT_FAILURE);
   }
@@ -76,7 +87,7 @@ int main(int argc, char**argv){
   if(fc==0 && fs==0) {
     perror("Possible de creer un volume a la place du Master Boot Record.\n");
     exit(EXIT_FAILURE);
-  }
+    }*/
 
   /* creation du volume */
   if(!make_vol(fc, fs, nb_bloc)){

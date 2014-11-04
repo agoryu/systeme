@@ -101,6 +101,7 @@ void write_bloc(const unsigned int vol,
  */
 void format_vol(const unsigned int vol);
 
+
 /**
  * Cree un volume a partir du couple \a cylinder et \a sector 
  * de \a nbloc bloc.
