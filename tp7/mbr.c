@@ -122,16 +122,6 @@ void write_bloc(const unsigned int vol,
   write_sector(cylindre, secteur, buffer);
 }
 
-/*void write_bloc_n(unsigned int vol, 
-                  unsigned int pos, 
-                  unsigned char* buffer, 
-                  unsigned int size) {
-
-
-
-}*/
-
-
 void format_vol(const unsigned int vol) {
 
   unsigned int secteur, cylindre;

@@ -56,6 +56,6 @@ unsigned int new_bloc() {
 
 void free_bloc(const unsigned int bloc) {
 
-	
+	/* ajout du bloc bloc dans la liste des bloc libre */
 }
 
