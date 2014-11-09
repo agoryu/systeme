@@ -53,7 +53,7 @@ void init_super(const unsigned int vol);
 /**
   * \brief Charge le super bloc dans une variable globale
   * \param[in] vol numero du volume à charger
-  * \return 1 si le chargement a été chargé, 0 sinon
+  * \return 1 si le chargement a fonctionné, 0 sinon
   */
 int load_super(const unsigned int vol);
 
@@ -68,4 +68,16 @@ unsigned int new_bloc();
   * \param[in] bloc numéro du bloc à libérer
   */
 void free_bloc(const unsigned int bloc);
+
+/**
+  * \brief Vérifie si le disque courant est rempli
+  * \return 1 si le disque est rempli, 0 sinon
+  */
+unsigned int is_full();
+
+/**
+  * \brief Retourne le nombre de bloc libre dans le volume courant 
+  * \return nombre de bloc libre
+  */
+unsigned int get_nb_free_bloc();
 #endif

@@ -1,5 +1,5 @@
-#ROOTDIR =../libhardware
-ROOTDIR =/home/enseign/ASE
+ROOTDIR =../libhardware
+#ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
 CFLAGS	= -Wall -ansi -pedantic -m32 -ansi -std=c11
@@ -9,8 +9,8 @@ LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
-BINARIES= dmps frmt mkvol dvol
-OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o vol.o
+BINARIES= dmps frmt mkvol dvol validation_volume
+OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o vol.o validation_volume.o
 
 
 
@@ -24,6 +24,12 @@ check-syntax:
 # -------------------------------------------
 
 #Troisieme couche: structure d'un volume
+validation_volume: validation_volume.o vol.o mbr.o drive.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+validation_volume.o: mbr.h vol.h validation_volume.c drive.h
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
 vol.o: vol.h vol.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 

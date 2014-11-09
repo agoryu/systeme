@@ -8,6 +8,11 @@ void init_super(const unsigned int vol) {
 	struct super_s super;
 	unsigned int free_size = -1;
 
+	if(vol > MAX_VOL) {
+		printf("le volume en parametre depasse le nombre de volume possible.\n");
+		return;
+	}
+
 	super.super_magic = SUPER_MAGIC;
 	super.super_first_free = 1;
 
@@ -21,6 +26,12 @@ void init_super(const unsigned int vol) {
 }
 
 int load_super(const unsigned int vol) {
+
+	if(vol > MAX_VOL) {
+		printf("le volume en parametre depasse le nombre de volume possible.\n");
+		return 0;
+	}
+
 	current_vol = vol;
 	/*read_bloc_n(vol, SUPER, &current_super, sizeof(super));*/
 	read_bloc(vol, SUPER, (unsigned char*)&current_super);
@@ -56,6 +67,73 @@ unsigned int new_bloc() {
 
 void free_bloc(const unsigned int bloc) {
 
-	/* ajout du bloc bloc dans la liste des bloc libre */
+	/* nouveau bloc libre qui sera ajouté à la liste */
+	struct free_bloc_s new_free_bloc;
+
+	/* bloc libre permettant de trouver le bloc précédent
+	le nouveau bloc libre */
+	struct free_bloc_s current_free_bloc;
+
+	unsigned int position = current_super.super_first_free;
+
+	/* variable permettant de vérifier si bloc trouve sa place
+	dans la chaine de bloc libre */
+	unsigned int trouve = 0;
+
+	if(bloc > mbr.mbr_vol[current_vol].vol_n_sector) {
+		printf("le numero de bloc n'existe pas dans le volume courant\n");
+		return;
+	}
+
+	/* on incremente le nombre de bloc libre */
+	current_super.super_n_free++;
+
+	/* cas ou le nouveau bloc libre est avant le premier bloc libre */
+	if(current_super.super_first_free > bloc) {
+		/* pour l'instant le nouveau bloc libre ne 
+		sera pas fusionné a une liste de bloc qui serait
+		a coté */
+		new_free_bloc.fb_n_free = 1;
+		new_free_bloc.fb_next = current_super.super_first_free;
+		current_super.super_first_free = bloc;
+
+	} else {
+		/* premiere lecture pour ne pas prendre en compte le current_super */
+		read_bloc(current_vol, position, (unsigned char*)&current_free_bloc);
+		position = current_free_bloc.fb_next;
+
+		/* on cherche le bloc précédent le nouveau bloc libre */
+		while(position < bloc || position <= current_super.super_first_free) {
+			read_bloc(current_vol, position, (unsigned char*)&current_free_bloc);
+
+			/* on verifie que l'on trouve la position du bloc sinon on retourne une erreur */
+			if(current_free_bloc.fb_next < bloc)
+				trouve = 1;
+
+			position = current_free_bloc.fb_next;
+		}
+
+		if(trouve) {
+			/* initialisation des chanps du nouveau bloc libre */
+			new_free_bloc.fb_next = current_free_bloc.fb_next;
+			new_free_bloc.fb_n_free = 1;
+
+			/* modification du champ next du bloc précédent le nouveau
+			bloc libre */
+			current_free_bloc.fb_next = bloc;
+		} else {
+			printf("le bloc a libérer n'existe pas\n");
+			return;
+		}
+	}
+	write_bloc(current_vol, bloc, (unsigned char*)&new_free_bloc);
+}
+
+unsigned int is_full() {
+	return current_super.super_n_free == 0;
+}
+
+unsigned int get_nb_free_bloc() {
+	return current_super.super_n_free;
 }
 
