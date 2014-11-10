@@ -1,7 +1,7 @@
 #include "drive.h"
 
 
-/* Fonction du fichier
+/* Fonction du fichier drive.c
  *
  * Retourne vrai si le cylindre en parametre est correct
  */
@@ -14,7 +14,7 @@ int is_valid_cylinder(const unsigned int cylinder){
 }
 
 
-/* Fonction du fichier
+/* Fonction du fichier drive.c
  *
  * Retourne vrai si le secteur en parametre est correct
  */
@@ -27,7 +27,7 @@ int is_valid_sector(const unsigned int sector){
 }
 
 
-/* Fonction du fichier
+/* Fonction du fichier drive.c
  *
  * Change la position de la tete de lecteur du disque
  */

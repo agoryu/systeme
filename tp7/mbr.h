@@ -5,7 +5,7 @@
  * \file mbr.h
  * \brief Gestionnaire de volumes
  * \author Elliot Vanegue et Gaëtan Deflandre
- * \version 2
+ * \version 1.2
  */
 
 #include "drive.h"
@@ -62,99 +62,97 @@ struct mbr_s {
 
 
 /**
- * Initialise le Master Boot Record pour une premiere utilisation
+ * Initialise le Master Boot Record pour une première utilisation
  */
 void init_mbr();
 
 /**
  * Charge le Master Boot Record si possible.
- * \return 1 en cas de succes sinon 0
+ * \return 1 en cas de succès sinon 0
  */
 int load_mbr();
 
 /**
  * Sauvegarde, sur le premier cylindre et premier secteur, le 
- * Master Boot Record courant.
- * \return 1 en cas de succes sinon 0
+ * Master Boot Record.
+ * \return 1 en cas de succès sinon 0
  */
 int save_mbr();
 
 /**
- * Lit le \a nbloc eme bloc du volume \a vol.
- * \param[in] vol Le volume sur lequel sont ecrite les donnees que l'on veut 
- *                recuperer.
- * \param[in] nbloc Le numero du bloc que l'on veut lire dans le volume 
- *                  \a vol.
- * \param[out] buffer Buffer dans lequel sont ecrite les donnees lues.  
+ * Lit le bloc \a nbloc du volume \a vol.
+ * \param[in] vol Le volume sur lequel sont les données que l'on veut 
+ *                récupérer.
+ * \param[in] nbloc Le numéro du bloc où sont les données que l'on veut 
+ *                  récupérer, dans le volume \a vol.
+ * \param[out] buffer Buffer dans lequel sont écrite les données lues.  
  */
 void read_bloc(const unsigned int vol, 
 	       const unsigned int nbloc, 
 	       unsigned char* buffer);
 
 /**
- * Lit \a nb_bloc à partir du bloc \a nbloc eme bloc du volume \a vol .
- * \param[in] vol Le volume sur lequel sont ecrite les donnees que l'on veut 
- *                recuperer.
- * \param[in] nbloc Le numero du bloc que l'on veut lire dans le volume 
- *                  \a vol.
- * \param[out] buffer Buffer dans lequel sont ecrite les donnees lues.
- * \param[in] nb_bloc nombre de bloc à lire.  
+ * Lit, au maximum, \a n octets du bloc \a nbloc du volume \a vol .
+ * \param[in] vol Le volume sur lequel sont les données que l'on veut 
+ *                récupérer.
+ * \param[in] nbloc Le numéro du bloc où sont les données que l'on veut 
+ *                  récupérer, dans le volume \a vol.
+ * \param[out] buffer Buffer dans lequel sont écrite les données lues.
+ * \param[in] n Nombre d'octets.
  */
-
 void read_bloc_n(const unsigned int vol, 
-         const unsigned int nbloc, 
-         unsigned char* buffer,
-         const unsigned int nb_bloc);
+		 const unsigned int nbloc, 
+		 unsigned char* buffer,
+		 const size_t n);
 
 /**
- * Ecrit le contenu de \a buffer sur le \a nbloc eme 
- * bloc du volume \a vol.
- * \param[in] vol Le volume sur lequel on veut ecrire les donnees.
- * \param[in] nbloc Le numero du bloc sur lequel on veut ecrire les donnees 
+ * Ecrit le contenu de \a buffer sur le bloc \a nbloc du volume \a vol.
+ * \param[in] vol Le volume sur lequel on veut ecrire les donnees de \a buffer.
+ * \param[in] nbloc Le numero du bloc sur lequel on veut écrire les données 
  *                  dans le volume \a vol.
  * \param[in] buffer Buffer qui contient les donnees que l'on veut écrite sur 
  *                   le disque.
  */
 void write_bloc(const unsigned int vol, 
-		      const unsigned int nbloc, 
+		const unsigned int nbloc, 
 	        const unsigned char* buffer);
 
 /**
- * Ecris \a nb_bloc à partir du bloc \a nbloc eme bloc du volume \a vol.
- * \param[in] vol Le volume sur lequel on veut ecrire les donnees.
- * \param[in] nbloc Le numero du bloc où l'on veut écrire dans le volume 
- *                  \a vol.
- * \param[out] buffer Buffer qui contient les donnees que l'on veut écrite sur 
+ * Ecris, au maximum, \a n octets sur le bloc \a nbloc du volume \a vol.
+ * \param[in] vol Le volume sur lequel on veut ecrire les donnees de \a buffer.
+ * \param[in] nbloc Le numero du bloc sur lequel on veut écrire les données 
+ *                  dans le volume \a vol.
+ * \param[in] buffer Buffer qui contient les donnees que l'on veut écrite sur 
  *                   le disque.
- * \param[in] nb_bloc nombre de bloc à écrire.  
+ * \param[in] n Nombre d'octets.
  */
 void write_bloc_n(const unsigned int vol, 
-         const unsigned int nbloc, 
-         unsigned char* buffer,
-         const unsigned int nb_bloc);
+		  const unsigned int nbloc, 
+		  unsigned char* buffer,
+		  const size_t n);
 
 /**
- * Supprime les donnees du volume \a vol sans supprime le volume \a vol
- * \param[in] vol Le volume a formate.
+ * Supprime les données du volume \a vol, en conservant ce volume \a vol.
+ * \param[in] vol Le volume à formater.
  */
 void format_vol(const unsigned int vol);
 
 
 /**
- * Cree un volume a partir du couple \a cylinder et \a sector 
- * de \a nbloc bloc.
- * \param[in] cylinder Commence a partir de ce cylindre.
- * \param[in] sector Commence a partir de ce secteur 
+ * Crée un volume à partir du couple \a cylinder et \a sector 
+ * de \a nbloc bloc(s), si possible.
+ * \param[in] cylinder Commence à partir de ce cylindre.
+ * \param[in] sector Commence à partir de ce secteur 
  *                   dans le cylindre \a cylinder.
  * \param[in] nbloc Nombre de bloc pour le volume.
  * \return 1 en cas de succes sinon 0.
  */
 int make_vol(const unsigned cylinder, 
-	  const unsigned sector, 
-	  const unsigned nbloc);
+	     const unsigned sector, 
+	     const unsigned nbloc);
 
 /**
- * Affiche les volume presents sur le disque.
+ * Affiche les volumes présents sur le disque.
  */
 void display_vol();
 

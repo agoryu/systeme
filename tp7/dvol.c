@@ -23,7 +23,7 @@ int main(int argc, char**argv){
   }
 
   /* init hardware */
-  if(!init_hardware("hardware.ini")){
+  if(!init_hardware(HW_CONFIG)){
     perror("Initialization error\n");
     exit(EXIT_FAILURE);
   }

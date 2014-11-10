@@ -1,8 +1,12 @@
 #include "mbr.h"
 
+
 struct mbr_s mbr;
 
-/* fonction qui permet de calculer la valeur du secteur et du cylindre
+
+/* Fonction du fichier mbr.c
+ *
+ * fonction qui permet de calculer la valeur du secteur et du cylindre
  * à partir du volume et du nombre de bloc
  */
 void calc_secteur_cylindre(const unsigned int vol, 
@@ -19,7 +23,9 @@ void calc_secteur_cylindre(const unsigned int vol,
   *cylindre = fc + (fs + nbloc) / HDA_MAXSECTOR;
 }
 
-/*
+
+/* Fonction du fichier mbr.c
+ *
  * retourne 1 si l'espace (a partir de cylinder et sector) est libre 
  * sur nbloc blocs.
  */
@@ -91,6 +97,7 @@ int save_mbr() {
   return 1;
 }
 
+
 void read_bloc_n(const unsigned int vol, 
          const unsigned int nbloc, 
          unsigned char* buffer,
@@ -103,6 +110,7 @@ void read_bloc_n(const unsigned int vol,
   read_sector_n(cylindre, secteur, buffer, nb_bloc);
 }
 
+
 void read_bloc(const unsigned int vol, 
 	       const unsigned int nbloc, 
 	       unsigned char* buffer) {
@@ -113,6 +121,7 @@ void read_bloc(const unsigned int vol,
 
   read_sector(cylindre, secteur, buffer);
 }
+
 
 void write_bloc_n(const unsigned int vol, 
          const unsigned int nbloc, 
@@ -126,6 +135,7 @@ void write_bloc_n(const unsigned int vol,
   write_sector_n(cylindre, secteur, buffer, nb_bloc);
 }
 
+
 void write_bloc(const unsigned int vol, 
 		const unsigned int nbloc, 
 	        const unsigned char* buffer) {
@@ -136,6 +146,7 @@ void write_bloc(const unsigned int vol,
 
   write_sector(cylindre, secteur, buffer);
 }
+
 
 void format_vol(const unsigned int vol) {
 
@@ -185,6 +196,7 @@ int make_vol(const unsigned cylinder,
 
   return 0;
 }
+
 
 void display_vol(){
   int i, nvol;

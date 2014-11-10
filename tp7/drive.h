@@ -4,9 +4,9 @@
 
 /**
  * \file drive.h
- * \brief Gestionnaire de volumes
+ * \brief Accès materiel.
  * \author Elliot Vanegue et Gaëtan Deflandre
- * \version 1.2
+ * \version 1.1
  */
 
 
@@ -16,6 +16,9 @@
 #include <string.h>
 #include "hardware.h"
 
+
+/** Nom du fichier d'initialisation du materiel */
+#define HW_CONFIG "hardware.ini"
 
 #define ENABLE_HDA      1 
 #define HDA_FILENAME    "vdiskA.bin"
@@ -32,8 +35,8 @@
 
 
 /**
- * Lit le secteur au cylindre \a cylinder et au secteur 
- * \a sector. Les données lues sont écrite dans \a buffer.
+ * Lit le secteur au cylindre \a cylinder, secteur \a sector. 
+ * Les données lues sont écrite dans \a buffer.
  * \param[in] cylinder Numéro du cylindre.
  * \param[in] sector Numéro du secteur.
  * \param[out] buffer Tampon où sont écrites les données lues. 
@@ -42,25 +45,61 @@ void read_sector(const unsigned int cylinder,
 		 const unsigned int sector, 
 		 unsigned char* buffer);
 
+/**
+ * Lit au maximum \a n octets du secteur au cylindre \a cylinder, 
+ * secteur \a sector. Les données lues sont écrite dans \a buffer.
+ * \param[in] cylinder Numéro du cylindre.
+ * \param[in] sector Numéro du secteur.
+ * \param[out] buffer Tampon où sont écrites les données lues.
+ * \param[in] n Nombre d'octets.
+ */
 void read_sector_n(const unsigned int cylinder, 
 		   const unsigned int sector, 
 		   unsigned char* buffer, 
 		   const size_t n);
 
+/**
+ * Ecrit le contenu de \a buffer dans le secteur au cylindre 
+ * \a cylinder et secteur \a sector.
+ * \param[in] cylinder Numéro du cylindre.
+ * \param[in] sector Numéro du sector.
+ * \param[in] buffer Contenu à écrire sur le secteur.
+ */
 void write_sector(const unsigned int cylinder, 
 		  const unsigned int sector, 
 		  const unsigned char* buffer);
 
+
+/**
+ * Ecrit au maximum \n octets du contenu \a buffer dans le 
+ * secteur au cylindre \a cylinder et secteur \a sector.
+ * \param[in] cylinder Numéro du cylindre.
+ * \param[in] sector Numéro du sector.
+ * \param[in] buffer Contenu à écrire sur le secteur.
+ * \param[in] n Nombre d'octets.
+ */
 void write_sector_n(const unsigned int cylinder, 
 		    const unsigned int sector, 
 		    const unsigned char* buffer,
 		    const size_t n);
 
+/**
+ * Ecrase les données des \a nsector secteur(s) à partir du 
+ * cylindre \a cylinder et secteur \a sector, par la valeur \a value.
+ * \param[in] cylinder Numéro de cylindre du premier secteur.
+ * \param[in] sector Numéro du secteur.
+ * \param[in] nsector Nombre de secteur à ecraser.
+ * \param[in] value Valeur à écrire sur les secteurs.
+ */
 void format_sector(const unsigned int cylinder, 
 		   const unsigned int sector, 
 		   const unsigned int nsector, 
 		   const unsigned int value);
 
+/**
+ * Ecrase tous les secteurs du disque par \a value.
+  * \param[in] value Valeur à écrire sur les secteurs.
+ */
 void format_all(const unsigned int value);
 
 #endif
