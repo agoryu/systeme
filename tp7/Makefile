@@ -9,11 +9,8 @@ LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
-BINARIES= dmps frmt mkvol dvol 
-#validation_volume
-OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o 
-#vol.o 
-#validation_volume.o
+BINARIES= dmps frmt mkvol dvol validation_volume
+OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o vol.o validation_volume.o
 
 
 
