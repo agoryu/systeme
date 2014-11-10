@@ -15,6 +15,15 @@
 /** Magique utilisé pour Le bloc super */
 #define SUPER_MAGIC 0xDEADC0DE
 
+ /** Numero du volume courant */
+ #define CURRENT_VOLUME 0
+
+ /** Nom du fichier d'initialisation du materiel */
+ #define HW_CONFIG "hardware.ini"
+
+ /** Nombre de fonction vide a créé */
+ #define NB_EMPTY_FUNCTION 16
+
 /** récupération du mbr du disque disponible dans le fichier mbr.c */
 extern struct mbr_s mbr;
 

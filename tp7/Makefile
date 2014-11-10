@@ -8,11 +8,13 @@ LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
-BINARIES= dmps frmt mkvol dvol validation_volume
+
+BINARIES= dmps frmt mkvol dvol validation_volume mknfs dfs
 OBJ_LIB	= drive.o mbr.o vol.o
 OBJ_EXE = dmps.o frmt.o mkvol.o dvol.o 
-OBJ_EXE += validation_volume.o
+OBJ_EXE += validation_volume.o mknfs.o dfs.o
 OBJECTS = $(OBJ_LIB) $(OBJ_EXE)
+
 
 
 all: 	$(BINARIES) $(OBJECTS)
@@ -25,8 +27,20 @@ check-syntax:
 # -------------------------------------------
 
 #Troisieme couche: structure d'un volume
+mknfs: mknfs.o vol.o mbr.o drive.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+dfs: dfs.o vol.o mbr.o drive.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
 validation_volume: validation_volume.o vol.o mbr.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+dfs.o: vol.h dfs.c mbr.h drive.h
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+mknfs.o: vol.h mknfs.c mbr.h drive.h
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 validation_volume.o: vol.h validation_volume.c mbr.h drive.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
