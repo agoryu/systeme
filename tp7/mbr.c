@@ -6,9 +6,9 @@ struct mbr_s mbr;
  * à partir du volume et du nombre de bloc
  */
 void calc_secteur_cylindre(const unsigned int vol, 
-                            const unsigned int nbloc,
-                            unsigned int *secteur,
-                            unsigned int *cylindre) {
+			   const unsigned int nbloc,
+			   unsigned int *secteur,
+			   unsigned int *cylindre) {
 
   unsigned int fs, fc;
 
@@ -34,22 +34,22 @@ int is_free_space(const unsigned cylinder,
     un autre volume :
     -sans faire un boucle sur tout les secteur entre (c,s) et (c,s)+nbloc
 
-   */
+  */
 
-    unsigned int i;
-    unsigned int deb, fin;
+  unsigned int i;
+  unsigned int deb, fin;
 
-    for(i=0; i<mbr.mbr_n_vol; i++) {
+  for(i=0; i<mbr.mbr_n_vol; i++) {
 
-      /* récupération de l'intervale du volume */
-      deb = mbr.mbr_vol[i].vol_first_sector;
-      fin = mbr.mbr_vol[i].vol_first_sector + mbr.mbr_vol[i].vol_n_sector;
+    /* récupération de l'intervale du volume */
+    deb = mbr.mbr_vol[i].vol_first_sector;
+    fin = mbr.mbr_vol[i].vol_first_sector + mbr.mbr_vol[i].vol_n_sector;
 
-      /* pour cette condition il faut voir si chaque secteur a un numéro unique
-      ou si a chaque nouveau cylindre on remet à 0 */
-      if( deb <= sector && fin >= sector)
-        return 0;
-    }
+    /* pour cette condition il faut voir si chaque secteur a un numéro unique
+       ou si a chaque nouveau cylindre on remet à 0 */
+    if( deb <= sector && fin >= sector)
+      return 0;
+  }
 
   return 1;
 }
@@ -111,7 +111,7 @@ void read_bloc(const unsigned int vol,
 
 
 void write_bloc(const unsigned int vol, 
-		      const unsigned int nbloc, 
+		const unsigned int nbloc, 
 	        const unsigned char* buffer) {
 
   unsigned int secteur, cylindre;
