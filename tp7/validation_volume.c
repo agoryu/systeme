@@ -21,11 +21,23 @@ int main() {
 	/* Allows all IT */
 	_mask(1);
 
+	/* chargement du mbr */
+	if(!load_mbr()){
+		perror("Erreur lors du chargement du Master Boot Record.");
+		exit(EXIT_FAILURE);
+	}
+
+	/* creation d'un volume bidon */
+	if(!make_vol(1, 1, 10)) {
+		perror("Erreur a la creation d'un volume bidon.");
+		exit(EXIT_FAILURE);
+	}
+
 	/* initialise le super du volume 1 */
-	init_super(1);
+	init_super(0);
 
 	/* charge le super du volume 1 dans la variable globale */
-	load_super(1);
+	load_super(0);
 
 	/* creation de nouveau bloc jusqu'a ce qu'il y est une erreur */
 	while(new_bloc());

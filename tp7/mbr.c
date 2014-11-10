@@ -95,12 +95,12 @@ void read_bloc_n(const unsigned int vol,
          const unsigned int nbloc, 
          unsigned char* buffer,
          const unsigned int nb_bloc) {
-  int i;
- 
-  for(i=0; i<nb_bloc; i++) {
-    read_bloc(vol, i + nbloc, buffer);
-    buffer++;
-  }
+  
+  unsigned int secteur, cylindre;
+
+  calc_secteur_cylindre(vol, nbloc, &secteur, &cylindre);
+
+  read_sector_n(cylindre, secteur, buffer, nb_bloc);
 }
 
 void read_bloc(const unsigned int vol, 
@@ -118,12 +118,12 @@ void write_bloc_n(const unsigned int vol,
          const unsigned int nbloc, 
          unsigned char* buffer,
          const unsigned int nb_bloc) {
-  int i;
 
-  for(i=0; i<nb_bloc; i++) {
-    write_bloc(vol, i + nbloc, buffer);
-    buffer++;
-  }
+  unsigned int secteur, cylindre;
+
+  calc_secteur_cylindre(vol, nbloc, &secteur, &cylindre);
+
+  write_sector_n(cylindre, secteur, buffer, nb_bloc);
 }
 
 void write_bloc(const unsigned int vol, 

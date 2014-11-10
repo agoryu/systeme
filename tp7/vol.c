@@ -6,7 +6,7 @@ static struct super_s current_super;
 void init_super(const unsigned int vol) {
 
 	struct super_s super;
-	unsigned int free_size = -1;
+	unsigned int free_size;
 
 	if(vol > MAX_VOL) {
 		printf("le volume en parametre depasse le nombre de volume possible.\n");
@@ -19,8 +19,7 @@ void init_super(const unsigned int vol) {
 	free_size = mbr.mbr_vol[vol].vol_n_sector - 1;
 
 	super.super_n_free = free_size;
-	/*write_bloc_n(vol, SUPER, (unsigned char*)&super, sizeof(struct super_s));*/
-	write_bloc(vol, SUPER, (unsigned char*)&super);
+	write_bloc_n(vol, SUPER, (unsigned char*)&super, sizeof(struct super_s));
 }
 
 int load_super(const unsigned int vol) {
@@ -31,8 +30,8 @@ int load_super(const unsigned int vol) {
 	}
 
 	current_vol = vol;
-	/*read_bloc_n(vol, SUPER, (unsigned char*)&current_super, sizeof(struct super_s));*/
-	read_bloc(vol, SUPER, (unsigned char*)&current_super);
+	read_bloc_n(vol, SUPER, (unsigned char*)&current_super, sizeof(struct super_s));
+	
 	return current_super.super_magic == SUPER_MAGIC;
 }
 
@@ -46,8 +45,7 @@ unsigned int new_bloc() {
 		return 0;
 	}
 
-	/*read_bloc_n(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc, sizeof(struct free_bloc_s));*/
-	read_bloc(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc);
+	read_bloc_n(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc, sizeof(struct free_bloc_s));
 	new = current_super.super_first_free;
 
 	if(free_bloc.fb_n_free == 1) {
@@ -58,8 +56,7 @@ unsigned int new_bloc() {
 		current_super.super_first_free++;
 		free_bloc.fb_n_free--;
 
-		/*write_bloc_n(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc, sizeof(struct free_bloc_s));*/
-		write_bloc(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc);
+		write_bloc_n(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc, sizeof(struct free_bloc_s));
 	}
 
 	return new;
@@ -85,11 +82,13 @@ void free_bloc(const unsigned int bloc) {
 		return;
 	}
 
-	/* on incremente le nombre de bloc libre */
-	current_super.super_n_free++;
+	if(current_super.super_n_free == 0) {
+		current_super.super_first_free = bloc;
+		new_free_bloc.fb_n_free = 1;
+		new_free_bloc.fb_next = bloc;
 
-	/* cas ou le nouveau bloc libre est avant le premier bloc libre */
-	if(current_super.super_first_free > bloc) {
+	} else if(current_super.super_first_free > bloc) {
+		/* cas ou le nouveau bloc libre est avant le premier bloc libre */
 		/* pour l'instant le nouveau bloc libre ne 
 		sera pas fusionné a une liste de bloc qui serait
 		a coté */
@@ -98,21 +97,19 @@ void free_bloc(const unsigned int bloc) {
 		current_super.super_first_free = bloc;
 
 	} else {
-		/* premiere lecture pour ne pas prendre en compte le current_super */
-		/*read_bloc_n(current_vol, position, (unsigned char*)&current_free_bloc, sizeof(struct free_bloc_s));*/
-		read_bloc(current_vol, position, (unsigned char*)&current_free_bloc);
-		position = current_free_bloc.fb_next;
 
 		/* on cherche le bloc précédent le nouveau bloc libre */
-		while(position < bloc || position <= current_super.super_first_free) {
-			/*read_bloc_n(current_vol, position, (unsigned char*)&current_free_bloc, sizeof(struct free_bloc_s));*/
-			read_bloc(current_vol, position, (unsigned char*)&current_free_bloc);
+		while(position < bloc) {
+			read_bloc_n(current_vol, position, (unsigned char*)&current_free_bloc, sizeof(struct free_bloc_s));
 
 			/* on verifie que l'on trouve la position du bloc sinon on retourne une erreur */
-			if(current_free_bloc.fb_next < bloc)
+			if(current_free_bloc.fb_next < bloc) {
 				trouve = 1;
+				break;
+			}
 
 			position = current_free_bloc.fb_next;
+			printf("next = %d\n", position);
 		}
 
 		if(trouve) {
@@ -128,8 +125,11 @@ void free_bloc(const unsigned int bloc) {
 			return;
 		}
 	}
-	/*write_bloc_n(current_vol, bloc, (unsigned char*)&new_free_bloc, sizeof(struct free_bloc_s));*/
-	write_bloc(current_vol, bloc, (unsigned char*)&new_free_bloc);
+
+	/* on incremente le nombre de bloc libre */
+	current_super.super_n_free++;
+
+	write_bloc_n(current_vol, bloc, (unsigned char*)&new_free_bloc, sizeof(struct free_bloc_s));
 }
 
 unsigned int is_full() {
