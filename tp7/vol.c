@@ -19,9 +19,7 @@ void init_super(const unsigned int vol) {
 	free_size = mbr.mbr_vol[vol].vol_n_sector - 1;
 
 	super.super_n_free = free_size;
-	/* version du cour mais je ne suis pas d'accord car le 
-	super représente un seul bloc et pas plusieurs */
-	/*write_bloc_n(vol, SUPER, &super, sizeof(super));*/
+	/*write_bloc_n(vol, SUPER, (unsigned char*)&super, sizeof(struct super_s));*/
 	write_bloc(vol, SUPER, (unsigned char*)&super);
 }
 
@@ -33,7 +31,7 @@ int load_super(const unsigned int vol) {
 	}
 
 	current_vol = vol;
-	/*read_bloc_n(vol, SUPER, &current_super, sizeof(super));*/
+	/*read_bloc_n(vol, SUPER, (unsigned char*)&current_super, sizeof(struct super_s));*/
 	read_bloc(vol, SUPER, (unsigned char*)&current_super);
 	return current_super.super_magic == SUPER_MAGIC;
 }
@@ -43,10 +41,12 @@ unsigned int new_bloc() {
 	struct free_bloc_s free_bloc;
 	unsigned int new;
 
-	if(current_super.super_n_free <= 0)
+	if(current_super.super_n_free <= 0) {
+		printf("plus de place libre sur le volume.\n");
 		return 0;
+	}
 
-	/*read_bloc_n(current_vol, current_super.super_first_free, &free_bloc, sizeof(free_bloc));*/
+	/*read_bloc_n(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc, sizeof(struct free_bloc_s));*/
 	read_bloc(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc);
 	new = current_super.super_first_free;
 
@@ -58,7 +58,7 @@ unsigned int new_bloc() {
 		current_super.super_first_free++;
 		free_bloc.fb_n_free--;
 
-		/*write_bloc_n(current_vol, current_super.super_first_free, & free_bloc, sizeof(free_bloc));*/
+		/*write_bloc_n(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc, sizeof(struct free_bloc_s));*/
 		write_bloc(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc);
 	}
 
@@ -99,11 +99,13 @@ void free_bloc(const unsigned int bloc) {
 
 	} else {
 		/* premiere lecture pour ne pas prendre en compte le current_super */
+		/*read_bloc_n(current_vol, position, (unsigned char*)&current_free_bloc, sizeof(struct free_bloc_s));*/
 		read_bloc(current_vol, position, (unsigned char*)&current_free_bloc);
 		position = current_free_bloc.fb_next;
 
 		/* on cherche le bloc précédent le nouveau bloc libre */
 		while(position < bloc || position <= current_super.super_first_free) {
+			/*read_bloc_n(current_vol, position, (unsigned char*)&current_free_bloc, sizeof(struct free_bloc_s));*/
 			read_bloc(current_vol, position, (unsigned char*)&current_free_bloc);
 
 			/* on verifie que l'on trouve la position du bloc sinon on retourne une erreur */
@@ -126,6 +128,7 @@ void free_bloc(const unsigned int bloc) {
 			return;
 		}
 	}
+	/*write_bloc_n(current_vol, bloc, (unsigned char*)&new_free_bloc, sizeof(struct free_bloc_s));*/
 	write_bloc(current_vol, bloc, (unsigned char*)&new_free_bloc);
 }
 

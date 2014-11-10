@@ -97,6 +97,17 @@ int save_mbr() {
   return 1;
 }
 
+void read_bloc_n(const unsigned int vol, 
+         const unsigned int nbloc, 
+         unsigned char* buffer,
+         const unsigned int nb_bloc) {
+  int i;
+ 
+  for(i=0; i<nb_bloc; i++) {
+    read_bloc(vol, i + nbloc, buffer);
+    buffer++;
+  }
+}
 
 void read_bloc(const unsigned int vol, 
 	       const unsigned int nbloc, 
@@ -109,6 +120,17 @@ void read_bloc(const unsigned int vol,
   read_sector(cylindre, secteur, buffer);
 }
 
+void write_bloc_n(const unsigned int vol, 
+         const unsigned int nbloc, 
+         unsigned char* buffer,
+         const unsigned int nb_bloc) {
+  int i;
+
+  for(i=0; i<nb_bloc; i++) {
+    write_bloc(vol, i + nbloc, buffer);
+    buffer++;
+  }
+}
 
 void write_bloc(const unsigned int vol, 
 		const unsigned int nbloc, 
