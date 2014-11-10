@@ -43,7 +43,7 @@ unsigned int new_bloc() {
 	struct free_bloc_s free_bloc;
 	unsigned int new;
 
-	if(current_super.super_n_free == 0)
+	if(current_super.super_n_free <= 0)
 		return 0;
 
 	/*read_bloc_n(current_vol, current_super.super_first_free, &free_bloc, sizeof(free_bloc));*/

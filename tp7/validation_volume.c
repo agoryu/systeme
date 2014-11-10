@@ -6,7 +6,7 @@ static void empty_it(){
 
 int main() {
 
-	unsigned int cpt = 0;
+	unsigned int cpt = 0, i;
 
 	/* init hardware */
 	if(!init_hardware("hardware.ini")){
@@ -42,7 +42,7 @@ int main() {
 		printf("le nombre de bloc alloué est %d\n", cpt);
 				
 	} else {
-		printf("le disque n'est pas encore rempli");
+		printf("le disque n'est pas encore rempli\n");
 	}
 
 	exit(EXIT_SUCCESS);

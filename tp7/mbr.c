@@ -1,7 +1,6 @@
 #include "mbr.h"
 
-
-static struct mbr_s mbr;
+struct mbr_s mbr;
 
 /* fonction qui permet de calculer la valeur du secteur et du cylindre
  * à partir du volume et du nombre de bloc

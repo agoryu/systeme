@@ -1,5 +1,5 @@
-ROOTDIR =../libhardware
-#ROOTDIR =/home/enseign/ASE
+#ROOTDIR =../libhardware
+ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
 CFLAGS	= -Wall -ansi -pedantic -m32 -ansi -std=c11
@@ -27,7 +27,7 @@ check-syntax:
 validation_volume: validation_volume.o vol.o mbr.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-validation_volume.o: mbr.h vol.h validation_volume.c drive.h
+validation_volume.o: vol.h validation_volume.c mbr.h drive.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 vol.o: vol.h vol.c
