@@ -92,6 +92,21 @@ void read_bloc(const unsigned int vol,
 	       unsigned char* buffer);
 
 /**
+ * Lit \a nb_bloc à partir du bloc \a nbloc eme bloc du volume \a vol .
+ * \param[in] vol Le volume sur lequel sont ecrite les donnees que l'on veut 
+ *                recuperer.
+ * \param[in] nbloc Le numero du bloc que l'on veut lire dans le volume 
+ *                  \a vol.
+ * \param[out] buffer Buffer dans lequel sont ecrite les donnees lues.
+ * \param[in] nb_bloc nombre de bloc à lire.  
+ */
+
+void read_bloc_n(const unsigned int vol, 
+         const unsigned int nbloc, 
+         unsigned char* buffer,
+         const unsigned int nb_bloc);
+
+/**
  * Ecrit le contenu de \a buffer sur le \a nbloc eme 
  * bloc du volume \a vol.
  * \param[in] vol Le volume sur lequel on veut ecrire les donnees.
@@ -103,6 +118,20 @@ void read_bloc(const unsigned int vol,
 void write_bloc(const unsigned int vol, 
 		      const unsigned int nbloc, 
 	        const unsigned char* buffer);
+
+/**
+ * Ecris \a nb_bloc à partir du bloc \a nbloc eme bloc du volume \a vol.
+ * \param[in] vol Le volume sur lequel on veut ecrire les donnees.
+ * \param[in] nbloc Le numero du bloc où l'on veut écrire dans le volume 
+ *                  \a vol.
+ * \param[out] buffer Buffer qui contient les donnees que l'on veut écrite sur 
+ *                   le disque.
+ * \param[in] nb_bloc nombre de bloc à écrire.  
+ */
+void write_bloc_n(const unsigned int vol, 
+         const unsigned int nbloc, 
+         unsigned char* buffer,
+         const unsigned int nb_bloc);
 
 /**
  * Supprime les donnees du volume \a vol sans supprime le volume \a vol
