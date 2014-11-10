@@ -3,9 +3,9 @@
 
 /**
  * \file mbr.h
- * \brief Gestionnaire de volume
+ * \brief Gestionnaire de volumes
  * \author Elliot Vanegue et Gaëtan Deflandre
- * \version 1
+ * \version 2
  */
 
 #include "drive.h"

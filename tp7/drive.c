@@ -1,6 +1,10 @@
 #include "drive.h"
 
 
+/* Fonction du fichier
+ *
+ * Retourne vrai si le cylindre en parametre est correct
+ */
 int is_valid_cylinder(const unsigned int cylinder){
   if( cylinder<0 || cylinder>=HDA_MAXCYLINDER ){
     perror("Invalid cylinder\n");
@@ -10,6 +14,10 @@ int is_valid_cylinder(const unsigned int cylinder){
 }
 
 
+/* Fonction du fichier
+ *
+ * Retourne vrai si le secteur en parametre est correct
+ */
 int is_valid_sector(const unsigned int sector){
   if( sector<0   || sector>=HDA_MAXSECTOR ){
     perror("Invalid sector\n");
@@ -19,6 +27,10 @@ int is_valid_sector(const unsigned int sector){
 }
 
 
+/* Fonction du fichier
+ *
+ * Change la position de la tete de lecteur du disque
+ */
 int seek_sector(const unsigned int cylinder, const unsigned int sector){
 
   if(!is_valid_cylinder(cylinder) || !is_valid_sector(sector)){

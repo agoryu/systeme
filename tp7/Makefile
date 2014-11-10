@@ -2,16 +2,17 @@ ROOTDIR =../libhardware
 #ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
-CFLAGS	= -Wall -ansi -pedantic -m32 -ansi -std=c11
-CFLAGS	+= -D_XOPEN_SOURCE=500
+CFLAGS	= -Wall -ansi -pedantic -m32 -std=c11
 CFLAGS  += -g
 LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
 BINARIES= dmps frmt mkvol dvol validation_volume
-OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o vol.o validation_volume.o
-
+OBJ_LIB	= drive.o mbr.o vol.o
+OBJ_EXE = dmps.o frmt.o mkvol.o dvol.o 
+OBJ_EXE += validation_volume.o
+OBJECTS = $(OBJ_LIB) $(OBJ_EXE)
 
 
 all: 	$(BINARIES) $(OBJECTS)

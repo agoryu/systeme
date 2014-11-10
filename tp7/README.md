@@ -1,5 +1,5 @@
 Un systeme de fichiers a la Unix
-===============================
+================================
 
 
 
@@ -13,7 +13,7 @@ Un systeme de fichiers a la Unix
 * * *
 
 
-# TP5 : Acces au materiel
+# TP5 : Accès au materiel
 
 
 ## Description

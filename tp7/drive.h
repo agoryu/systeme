@@ -1,6 +1,15 @@
 #ifndef _DRIVE_H_
 #define _DRIVE_H_
 
+
+/**
+ * \file drive.h
+ * \brief Gestionnaire de volumes
+ * \author Elliot Vanegue et Gaëtan Deflandre
+ * \version 1.2
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -22,12 +31,13 @@
 #define HDA_POFF_DELAY  30 
 
 
-int is_valid_cylinder(const unsigned int cylinder);
-
-int is_valid_sector(const unsigned int sector);
-
-int seek_sector(const unsigned int cylinder, const unsigned int sector);
-
+/**
+ * Lit le secteur au cylindre \a cylinder et au secteur 
+ * \a sector. Les données lues sont écrite dans \a buffer.
+ * \param[in] cylinder Numéro du cylindre.
+ * \param[in] sector Numéro du secteur.
+ * \param[out] buffer Tampon où sont écrites les données lues. 
+ */
 void read_sector(const unsigned int cylinder, 
 		 const unsigned int sector, 
 		 unsigned char* buffer);
