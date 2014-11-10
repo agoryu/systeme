@@ -2,8 +2,7 @@ ROOTDIR =../libhardware
 #ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
-CFLAGS	= -Wall -ansi -pedantic -m32 -ansi -std=c11
-CFLAGS	+= -D_XOPEN_SOURCE=500
+CFLAGS	= -Wall -ansi -pedantic -m32 -std=c11
 CFLAGS  += -g
 LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
@@ -24,14 +23,14 @@ check-syntax:
 # -------------------------------------------
 
 #Troisieme couche: structure d'un volume
-validation_volume: validation_volume.o vol.o mbr.o drive.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+#validation_volume: validation_volume.o vol.o mbr.o drive.o
+#	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-validation_volume.o: mbr.h vol.h validation_volume.c drive.h
-	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+#validation_volume.o: mbr.h vol.h validation_volume.c drive.h
+#	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
-vol.o: vol.h vol.c
-	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+#vol.o: vol.h vol.c
+#	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 # Deuxieme couche: gestion de volumes
 mkvol: 	mkvol.o mbr.o drive.o
