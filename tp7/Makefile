@@ -1,5 +1,5 @@
-ROOTDIR =../libhardware
-#ROOTDIR =/home/enseign/ASE
+#ROOTDIR =../libhardware
+ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
 CFLAGS	= -Wall -ansi -pedantic -m32 -std=c11
@@ -8,8 +8,11 @@ LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
-BINARIES= dmps frmt mkvol dvol validation_volume
-OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o vol.o validation_volume.o
+BINARIES= dmps frmt mkvol dvol 
+#validation_volume
+OBJECTS	= drive.o dmps.o frmt.o mbr.o mkvol.o dvol.o 
+#vol.o 
+#validation_volume.o
 
 
 

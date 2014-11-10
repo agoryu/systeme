@@ -28,29 +28,23 @@ int is_free_space(const unsigned cylinder,
 		  const unsigned sector,
 		  const unsigned nbloc){
   
-  /*
+  unsigned new_deb, new_fin;
+  unsigned i, i_deb, i_fin;
 
-    il y a un moyen de savoir si le volume qui commence a c et s de nb blocs 
-    commence sur un autre vol, fin sur un autre vol ou ecrase completement 
-    un autre volume :
-    -sans faire un boucle sur tout les secteur entre (c,s) et (c,s)+nbloc
 
-  */
+  /* debut et fin du volume donne en parametre, d'un point de vue unidimensionnel */
+  new_deb = cylinder * HDA_MAXSECTOR + sector;
+  new_fin = new_deb + nbloc;
 
-  unsigned int i;
-  unsigned int deb, fin;
+  for(i=0; i<mbr.mbr_n_vol; i++){
 
-  for(i=0; i<mbr.mbr_n_vol; i++) {
+    i_deb = mbr.mbr_vol[i].vol_first_cylinder * HDA_MAXSECTOR + mbr.mbr_vol[i].vol_first_sector;
+    i_fin = i_deb + mbr.mbr_vol[i].vol_n_sector;
 
-    /* récupération de l'intervale du volume */
-    deb = mbr.mbr_vol[i].vol_first_sector;
-    fin = mbr.mbr_vol[i].vol_first_sector + mbr.mbr_vol[i].vol_n_sector;
-
-    /* pour cette condition il faut voir si chaque secteur a un numéro unique
-       ou si a chaque nouveau cylindre on remet à 0 */
-    if( deb <= sector && fin >= sector)
+    if( !((i_deb<new_deb && i_fin<new_deb) || (new_fin<i_deb && new_fin<i_fin)) ){
       return 0;
-  }
+    }
+  }  
 
   return 1;
 }
@@ -167,11 +161,8 @@ int make_vol(const unsigned cylinder,
     return 1;
 
   }
-    
-  fprintf(stderr, "Impossible de creer un volume de %d blocs, ", nbloc);
-  fprintf(stderr, "au cylindre %d et secteur %d\n", cylinder, sector);
-  return 0;
 
+  return 0;
 }
 
 void display_vol(){

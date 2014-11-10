@@ -25,11 +25,11 @@ extern struct mbr_s mbr;
  */
 struct super_s {
   /** numéro magique */
-	unsigned super_magic;
+  unsigned super_magic;
   /** premier bloc libre dans la liste de bloc */
-	unsigned super_first_free;
+  unsigned super_first_free;
   /** nombre de bloc libre dans la liste de bloc */
-	unsigned super_n_free;
+  unsigned super_n_free;
 };
 
 /**
@@ -38,9 +38,9 @@ struct super_s {
  */
 struct free_bloc_s {
   /** nombre de bloc libre à la suite */
-	unsigned fb_n_free;
+  unsigned fb_n_free;
   /** prochain ensemble de bloc libre */
-	unsigned fb_next;
+  unsigned fb_next;
 };
 
 /**

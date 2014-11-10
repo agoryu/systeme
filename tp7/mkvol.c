@@ -20,17 +20,17 @@ void usage(){
 
 int main(int argc, char**argv){
 	
-  unsigned fc = 0/*HDA_MAXCYLINDER+1*/;
-  unsigned fs = 1/*HDA_MAXSECTOR+1*/;
-  unsigned nb_bloc = 4/*0*/;
+  unsigned fc = HDA_MAXCYLINDER+1;
+  unsigned fs = HDA_MAXSECTOR+1;
+  unsigned nb_bloc = 4;
   int i;
 
 
-  /* vérification des arguments entree par l'utilisateur */
-  /*if(argc != 7 || (argc>1  && strcmp(argv[1], "-h")==0)){
+  /*vérification des arguments entree par l'utilisateur */
+  if(argc != 7 || (argc>1  && strcmp(argv[1], "-h")==0)){
     usage();
     exit(EXIT_SUCCESS);
-    }*/
+  }
 
   /* init hardware */
   if(!init_hardware("hardware.ini")){
@@ -52,7 +52,7 @@ int main(int argc, char**argv){
   }
 
   /* recuperer les arguments */
-  /*for(i=1; i<argc; i++){
+  for(i=1; i<argc; i++){
 
     if(strcmp(argv[i], "-s") == 0){
       nb_bloc = atoi(argv[i+1]);
@@ -66,20 +66,20 @@ int main(int argc, char**argv){
     if(strcmp(argv[i], "-fs") == 0){
       fs = atoi(argv[i+1]);
     }
-    }*/
+  }
 
   /* gestion des erreur d'arguments */
-  /*if(nb_bloc <= 0 || nb_bloc<(HDA_MAXCYLINDER*HDA_MAXSECTOR)){
+  if(nb_bloc <= 0 || nb_bloc>=(HDA_MAXCYLINDER*HDA_MAXSECTOR)){
     perror("La taille du volume impossible.\n");
     exit(EXIT_FAILURE);
   }
 
-  if(fc<HDA_MAXCYLINDER){
+  if(fc>HDA_MAXCYLINDER){
     perror("Cylindre possible.\n");
     exit(EXIT_FAILURE);
   }
 
-  if(fs<HDA_MAXSECTOR){
+  if(fs>HDA_MAXSECTOR){
     perror("Secteur possible.\n");
     exit(EXIT_FAILURE);
   }
@@ -87,11 +87,13 @@ int main(int argc, char**argv){
   if(fc==0 && fs==0) {
     perror("Possible de creer un volume a la place du Master Boot Record.\n");
     exit(EXIT_FAILURE);
-    }*/
+  }
 
   /* creation du volume */
   if(!make_vol(fc, fs, nb_bloc)){
-    perror("Erreur lors de la creation du volume.\n");
+    fprintf(stderr, "Erreur lors de la creation du volume.\n");
+    fprintf(stderr, "La creation du volume est impossible ");
+    fprintf(stderr, "avec les carateristiques donnees en parametre.\n");
     exit(EXIT_FAILURE);
   }
 
