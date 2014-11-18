@@ -45,10 +45,11 @@ unsigned int new_bloc() {
   unsigned int new;
 
   if(current_super.super_n_free <= 0) {
-    fprintf(stderr, "Plus de place libre sur le volume.\n");
+    fprintf(stderr, "Plus de place libre sur ce volume.\n");
     return 0;
   }
 
+  /* A verifier */
   read_bloc_n(current_vol, current_super.super_first_free, (unsigned char*)&free_bloc, sizeof(struct free_bloc_s));
   new = current_super.super_first_free;
 
