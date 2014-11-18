@@ -28,7 +28,7 @@ void init_super(const unsigned int vol) {
 int load_super(const unsigned int vol) {
 
   if(vol > MAX_VOL) {
-    printf("le volume en parametre depasse le nombre de volume possible.\n");
+    fprintf(stderr, "Le volume en parametre depasse le nombre de volume possible.\n");
     return 0;
   }
 
@@ -45,7 +45,7 @@ unsigned int new_bloc() {
   unsigned int new;
 
   if(current_super.super_n_free <= 0) {
-    printf("plus de place libre sur le volume.\n");
+    fprintf(stderr, "Plus de place libre sur le volume.\n");
     return 0;
   }
 
@@ -109,8 +109,8 @@ void free_bloc(const unsigned int bloc) {
 
       /* on verifie que l'on trouve la position du bloc sinon on retourne une erreur */
       if(current_free_bloc.fb_next < bloc) {
-	trouve = 1;
-	break;
+      	trouve = 1;
+      	break;
       }
 
       position = current_free_bloc.fb_next;
@@ -126,7 +126,7 @@ void free_bloc(const unsigned int bloc) {
 	 bloc libre */
       current_free_bloc.fb_next = bloc;
     } else {
-      printf("le bloc a libérer n'existe pas\n");
+      fprintf(stderr, "Le bloc a libérer n'existe pas\n");
       return;
     }
   }

@@ -7,7 +7,7 @@ static void empty_it(){
 int main(int argc, char**argv){
 
 	unsigned int i;
-	unsigned fc = 1;
+	unsigned fc = 0;
   	unsigned fs = 1;
   	unsigned nb_bloc = 10;
 

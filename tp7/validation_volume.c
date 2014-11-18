@@ -9,7 +9,7 @@ int main() {
 	unsigned int cpt = 0, i;
 
 	/* init hardware */
-	if(!init_hardware("hardware.ini")){
+	if(!init_hardware(HW_CONFIG)){
 		perror("Initialization error\n");
 		exit(EXIT_FAILURE);
 	}
