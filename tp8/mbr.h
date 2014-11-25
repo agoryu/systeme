@@ -16,6 +16,9 @@
 /** Nombre magique utilisé pour la structure mbr_s */
 #define MBR_MAGIC 0xDEADC0DE
 
+/** Variable globale du Master Boot Record disponible pour les couches supérieurs */
+extern struct mbr_s mbr;
+
 /**
  * \Brief Type de volume
  * \enum vol_type_e mbr.h "mbr.h"

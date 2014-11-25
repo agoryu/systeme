@@ -21,8 +21,8 @@
 /** Nombre de fonction vide a créé */
 #define NB_EMPTY_FUNCTION 16
 
-/** récupération du mbr du disque disponible dans le fichier mbr.c */
-extern struct mbr_s mbr;
+/** Le Volume current utile pour les couches supérieurs */
+extern static int current_vol;
 
 
 /**

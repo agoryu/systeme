@@ -1,7 +1,7 @@
 #include "vol.h"
 
 
-static int current_vol;
+int current_vol;
 static struct super_s current_super;
 
 
