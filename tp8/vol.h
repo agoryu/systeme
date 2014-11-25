@@ -83,7 +83,7 @@ void free_bloc(const unsigned int bloc);
  * \brief Libère plusieurs blocs dans la liste de bloc
  * \param[in] bloc numéro du bloc à libérer
  */
-void free_blocs(const unsigned int * blocs);
+void free_blocs(const unsigned int * blocs, const size_t size);
 
 /**
  * \brief Vérifie si le disque courant est rempli

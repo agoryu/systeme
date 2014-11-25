@@ -138,9 +138,8 @@ void free_bloc(const unsigned int bloc) {
   write_bloc_n(current_vol, bloc, (unsigned char*)&new_free_bloc, sizeof(struct free_bloc_s));
 }
 
-void free_blocs(const unsigned int * blocs) {
+void free_blocs(const unsigned int * blocs, const size_t size) {
 
-  const unsigned int size = sizeof(blocs);
   unsigned int i;
 
   for(i=0; i<size; i++) {

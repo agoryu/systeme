@@ -44,7 +44,7 @@ struct inode_s {
 	/** bloc direct */
 	unsigned int in_direct[N_DIRECT];
 	/** bloc indirect composé de bloc direct */
-	unsigned int indirect;
+	unsigned int in_indirect;
 	/** bloc double indirect composé de plusieurs bloc indirecte */
 	unsigned int in_d_indirect;
 };
