@@ -47,7 +47,7 @@ struct inode_s {
 	unsigned int indirect;
 	/** bloc double indirect composé de plusieurs bloc indirecte */
 	unsigned int in_d_indirect;
-}
+};
 
 /**
  * \brief Lit un inode à partir du inumber du fichier 
@@ -70,7 +70,7 @@ void write_inode(const unsigned int inumber, const struct inode_s *inode);
  * \param[in] type Type de fichier traité
  * \return Le numéro l'inode créé
  */
-unsigned int create_inode(const enum file_type_e type);
+unsigned int create_inode(const enum inode_type_e type);
 
 /**
  * \brief Suppression d'un inode 
@@ -88,7 +88,7 @@ int delete_inode(const unsigned int inumber);
  */
 unsigned int vbloc_of_fbloc(const unsigned int inumber, 
                             const unsigned int fbloc,
-                            const bool_t do_allocate);
+                            const unsigned int do_allocate);
 
 
 #endif
