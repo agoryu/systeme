@@ -54,7 +54,6 @@ struct free_bloc_s {
 /**
  * \brief Initialise le super bloc d'un volume
  * \param[in] vol numéro du volume à initialiser
- * \return void
  */
 void init_super(const unsigned int vol);
 
