@@ -22,7 +22,7 @@
 #define NB_EMPTY_FUNCTION 16
 
 /** Le Volume current utile pour les couches supérieurs */
-extern static int current_vol;
+extern int current_vol;
 
 
 /**

@@ -16,6 +16,9 @@
 /** Nombre magique utilisé pour la structure mbr_s */
 #define MBR_MAGIC 0xDEADC0DE
 
+/** Taille en nombre d'octets d'un bloc */
+#define BLOC_SIZE HDA_SECTORSIZE
+
 /** Variable globale du Master Boot Record disponible pour les couches supérieurs */
 extern struct mbr_s mbr;
 

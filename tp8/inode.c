@@ -5,5 +5,5 @@ void read_inode(const unsigned int inumber, struct inode_s *inode){
 }
 
 void write_inode(const unsigned int inumber, const struct inode_s *inode){
-  write_bloc_n(current_vol, inumber, );
+  write_bloc_n(current_vol, inumber, inode, sizeof(struct inode_s));
 }
