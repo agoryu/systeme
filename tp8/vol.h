@@ -80,6 +80,11 @@ unsigned int new_bloc();
  */
 void free_bloc(const unsigned int bloc);
 
+/**
+ * \brief Libère plusieurs blocs dans la liste de bloc
+ * \param[in] bloc numéro du bloc à libérer
+ */
+void free_blocs(const unsigned int * blocs);
 
 /**
  * \brief Vérifie si le disque courant est rempli
