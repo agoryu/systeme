@@ -56,3 +56,10 @@ int delete_inode(const unsigned int inumber){
   free_bloc(inode.in_d_indirect);
 }
 
+
+unsigned int vbloc_of_fbloc(const unsigned int inumber, 
+                            const unsigned int fbloc,
+                            const unsigned int do_allocate){
+  
+  
+}
