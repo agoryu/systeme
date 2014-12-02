@@ -10,7 +10,7 @@
  * \version 1
  */
 
- /** Magique */
+/** Magique */
 #define SUPER_MAGIC 0xDEADC0DE
 
 /** Nombre de bloc directe */
@@ -27,8 +27,11 @@
  * \enum inode_type_e mbr.h "inode.h"
  */
 enum inode_type_e {
+  /** Type d'inoeud fichier */
   IT_FILE,
+  /** Type d'inoeud répertoire */
   IT_DIR,
+  /** Autre type d'inoeud */
   IT_OTHER
 };
 
@@ -37,16 +40,16 @@ enum inode_type_e {
  * \struct inode_s "inode.h"  
  */
 struct inode_s {
-	/** type d'inode */
-	enum inode_type_e in_type;
-	/** taille en octet du fichier */
-	unsigned int in_size;
-	/** bloc direct */
-	unsigned int in_direct[N_DIRECT];
-	/** bloc indirect composé de bloc direct */
-	unsigned int in_indirect;
-	/** bloc double indirect composé de plusieurs bloc indirecte */
-	unsigned int in_d_indirect;
+  /** type d'inode */
+  enum inode_type_e in_type;
+  /** taille en octet du fichier */
+  unsigned int in_size;
+  /** bloc direct */
+  unsigned int in_direct[N_DIRECT];
+  /** bloc indirect composé de bloc direct */
+  unsigned int in_indirect;
+  /** bloc double indirect composé de plusieurs bloc indirecte */
+  unsigned int in_d_indirect;
 };
 
 /**
