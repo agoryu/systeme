@@ -35,25 +35,27 @@ unsigned int create_inode(const enum inode_type_e type){
 int delete_inode(const unsigned int inumber){
   
   struct inode_s inode;
-  int blocs[NNBPB];
-  int blocs2[NNBPB];
+  unsigned int blocs[NNBPB];
+  unsigned int blocs2[NNBPB];
   int i;
 
   read_inode(inumber, &inode);
   free_blocs(inode.in_direct, N_DIRECT);
 
-  read_bloc(inode.in_indirect, blocs);
+  read_bloc(current_vol, inode.in_indirect, (unsigned char*)blocs);
   free_blocs(blocs, NNBPB);
   free_bloc(inode.in_indirect);
 
-  read_bloc(inode.in_d_indirect, blocs);
+  read_bloc(current_vol, inode.in_d_indirect, (unsigned char*)blocs);
 
   for(i=0; i<NNBPB; i++) {
-    read_bloc(blocs[i], blocs2);
+    read_bloc(current_vol, blocs[i], (unsigned char*)blocs2);
     free_blocs(blocs, NNBPB);
   }
 
   free_bloc(inode.in_d_indirect);
+
+  return 1;
 }
 
 
