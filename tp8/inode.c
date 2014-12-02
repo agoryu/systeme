@@ -63,5 +63,55 @@ unsigned int vbloc_of_fbloc(const unsigned int inumber,
                             const unsigned int fbloc,
                             const unsigned int do_allocate){
   
+  unsigned int position = fbloc;
+  struct inode_s inode;
+  unsigned int blocs[NNBPB];
+  unsigned int blocs2[NNBPB];
+  unsigned int i = 0;
+
+  read_inode(inumber, &inode);
+
+  if(position<N_DIRECT){
+    return inode.in_direct[position];
+  }
+
+  position -= N_DIRECT;
+
+  if(position<NNBPB){
+    if(inode.in_direct == BLOC_NULL){
+      return BLOC_NULL;
+    }
+
+    read_bloc(current_vol, inode.in_indirect, (unsigned char*)&blocs);
+    return blocs[position];
+  }
+
+  position -= NNBPB;
+
+  if(position < NNBPB*NNBPB){
+
+    if(inode.in_d_indirect == BLOC_NULL){
+      return BLOC_NULL;
+    }
+
+    read_bloc(current_vol, inode.in_d_indirect, (unsigned char*)&blocs);
+    for(i=0; i<NNBPB; i++){
+
+      if(position<NNBPB){
+	
+	if(blocs[i] == BLOC_NULL){
+	  return BLOC_NULL;
+	}
+
+	read_bloc(current_vol, blocs[i], (unsigned char*)&blocs2);
+	return blocs2[position];
+      }
+
+      position -= NNBPB;
+
+    }
+  }
   
+  /* fbloc est superieur au max de bloc par inoeud */
+  return BLOC_NULL;
 }
