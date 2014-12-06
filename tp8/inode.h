@@ -1,5 +1,5 @@
-#ifndef _INODE_H
-#define _INODE_H
+#ifndef INODE_H_
+#define INODE_H_
 
 #include "vol.h"
 
@@ -94,4 +94,4 @@ unsigned int vbloc_of_fbloc(const unsigned int inumber,
                             const unsigned int do_allocate);
 
 
-#endif
+#endif /* INODE_H_ */

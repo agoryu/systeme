@@ -10,7 +10,7 @@ LIBS    = -L$(LIBDIR) -lhardware
 
 
 BINARIES= dmps frmt mkvol dvol validation_volume mknfs dfs
-OBJ_LIB	= drive.o mbr.o vol.o inode.o
+OBJ_LIB	= drive.o mbr.o vol.o inode.o ifile.o
 OBJ_EXE = dmps.o frmt.o mkvol.o dvol.o 
 OBJ_EXE += validation_volume.o mknfs.o dfs.o
 OBJECTS = $(OBJ_LIB) $(OBJ_EXE)
@@ -26,11 +26,15 @@ check-syntax:
 	gcc $(CFLAGS) -o nul -S $(INCDIR) ${CHK_SOURCES}
 # -------------------------------------------
 
-#Troisième couche (2e partie): structure d'un fichier
+# Quatrième couche: manipulation de fichiers
+ifile.o: ifile.h ifile.c
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+# Troisième couche (2e partie): structure d'un fichier
 inode.o: inode.h inode.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
-#Troisieme couche: structure d'un volume
+# Troisième couche (1ere partie): structure d'un volume
 mknfs: mknfs.o vol.o mbr.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
