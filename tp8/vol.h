@@ -21,7 +21,7 @@
 /** Nombre de fonction vide a créé */
 #define NB_EMPTY_FUNCTION 16
 
-/** Le Volume current utile pour les couches supérieurs */
+/** Le volume courrant utile pour les couches supérieurs */
 extern int current_vol;
 
 
@@ -52,14 +52,14 @@ struct free_bloc_s {
 };
 
 /**
- * \brief Initialise le super bloc d'un volume
+ * Initialise le super bloc d'un volume
  * \param[in] vol numéro du volume à initialiser
  */
 void init_super(const unsigned int vol);
 
 
 /**
- * \brief Charge le super bloc dans une variable globale
+ * Charge le super bloc dans une variable globale
  * \param[in] vol numéro du volume à charger
  * \return 1 si le chargement a fonctionné, 0 sinon
  */
@@ -67,8 +67,10 @@ int load_super(const unsigned int vol);
 
 
 /**
- * \brief Retourne l'emplacement d'un bloc disponible
- * \return L'emplacement du bloc disponible
+ * Retourne le numéro d'un bloc libre sur le volume 
+ * courrant si disponible, sinon retourne 0 lorsqu'il n'y a 
+ * plus de blocs libres.
+ * \return le numéro d'un bloc libre, <code>0</code> sinon.
  */
 unsigned int new_bloc();
 
@@ -86,15 +88,15 @@ void free_bloc(const unsigned int bloc);
 void free_blocs(const unsigned int * blocs, const size_t size);
 
 /**
- * \brief Vérifie si le disque courant est rempli
+ * Vérifie si le disque courant est rempli
  * \return 1 si le disque est rempli, 0 sinon
  */
 unsigned int is_full();
 
 
 /**
- * \brief Retourne le nombre de bloc libre dans le volume courant 
- * \return nombre de bloc libre
+ * Retourne le nombre de bloc libre dans le volume courant 
+ * \return le nombre de bloc libre
  */
 unsigned int get_nb_free_bloc();
 

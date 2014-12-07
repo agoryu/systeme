@@ -39,7 +39,7 @@ int main(int argc, char**argv){
     }
 
     /* initialise le super du volume 1 */
-    init_super(CURRENT_VOLUME);
+    init_super(current_vol);
 
     printf("Le volume principale a été créé avec succès.\n");
 

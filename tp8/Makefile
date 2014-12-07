@@ -2,18 +2,21 @@ ROOTDIR =../libhardware
 #ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
-CFLAGS	= -Wall -ansi -pedantic -m32 -std=c11
+CFLAGS	= -Wall -Werror -ansi -pedantic -m32 
+CFLAGS  += -std=c11
 CFLAGS  += -g
 LIBDIR  = $(ROOTDIR)/lib
 INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
 
-BINARIES= dmps frmt mkvol dvol validation_volume mknfs dfs
-OBJ_LIB	= drive.o mbr.o vol.o inode.o ifile.o
-OBJ_EXE = dmps.o frmt.o mkvol.o dvol.o 
-OBJ_EXE += validation_volume.o mknfs.o dfs.o
-OBJECTS = $(OBJ_LIB) $(OBJ_EXE)
+BINARIES =  dmps frmt mkvol dvol validation_volume 
+BINARIES += mknfs dfs test_file
+OBJ_LIB	 =  drive.o mbr.o vol.o inode.o ifile.o
+OBJ_EXE  =  dmps.o frmt.o mkvol.o dvol.o 
+OBJ_EXE  += validation_volume.o mknfs.o 
+OBJ_EXE  += dfs.o test_file.o
+OBJECTS  =  $(OBJ_LIB) $(OBJ_EXE)
 
 
 
@@ -27,7 +30,16 @@ check-syntax:
 # -------------------------------------------
 
 # Quatrième couche: manipulation de fichiers
-ifile.o: ifile.h ifile.c
+test_file: test_file.o ifile.o inode.o vol.o mbr.o drive.o tools.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+test_file.o: test_file.c ifile.h inode.h vol.h mbr.h drive.h tools.h
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+ifile.o: ifile.h ifile.c inode.h tools.h
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+tools.o: tools.c tools.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 # Troisième couche (2e partie): structure d'un fichier
@@ -57,13 +69,13 @@ vol.o: vol.h vol.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 # Deuxieme couche: gestion de volumes
-mkvol: 	mkvol.o mbr.o drive.o
+mkvol: 	mkvol.o vol.o mbr.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 dvol: 	dvol.o mbr.o drive.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-mkvol.o: mbr.h mkvol.c drive.h
+mkvol.o: mkvol.c vol.h mbr.h drive.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 dvol.o:	mbr.h dvol.c drive.h
@@ -88,6 +100,8 @@ dmps.o: drive.h  dmps.c
 
 drive.o: drive.h drive.c
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+
 
 
 

@@ -44,6 +44,9 @@ unsigned int new_bloc() {
   struct free_bloc_s free_bloc;
   unsigned int new;
 
+  /* Debug */
+  printf("super_n_free: %d\n", current_super.super_n_free);
+
   if(current_super.super_n_free <= 0) {
     fprintf(stderr, "Plus de place libre sur ce volume.\n");
     return 0;

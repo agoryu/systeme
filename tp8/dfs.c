@@ -28,9 +28,9 @@ int main(int argc, char**argv){
   }
 
   /* afficher les volumes */
+  load_super(current_vol);  
   display_vol();
 
-  load_super(CURRENT_VOLUME);
 
   printf("Il reste %d espace dans le volume courant.\n", get_nb_free_bloc());
 

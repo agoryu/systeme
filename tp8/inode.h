@@ -24,7 +24,7 @@
 
 /**
  * \Brief Type d'inode
- * \enum inode_type_e mbr.h "inode.h"
+ * \enum inode_type_e inode.h "inode.h"
  */
 enum inode_type_e {
   /** Type d'inoeud fichier */
