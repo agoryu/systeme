@@ -4,6 +4,12 @@
 int current_vol;
 static struct super_s current_super;
 
+unsigned int is_init_super(const struct super_s super);
+
+unsigned int is_init_super(const struct super_s super){
+  return super.super_magic == SUPER_MAGIC;
+}
+
 
 void init_super(const unsigned int vol) {
 
@@ -15,6 +21,12 @@ void init_super(const unsigned int vol) {
     return;
   }
 
+  read_bloc_n(vol, SUPER, (unsigned char*)&super, sizeof(struct super_s));
+  if(is_init_super(super)){
+    printf("super déjà initialisé.\n");
+    return;
+  }
+
   super.super_magic = SUPER_MAGIC;
   super.super_first_free = 1;
 
@@ -22,6 +34,7 @@ void init_super(const unsigned int vol) {
 
   super.super_n_free = free_size;
   write_bloc_n(vol, SUPER, (unsigned char*)&super, sizeof(struct super_s));
+  printf("super initialisé.\n");
 }
 
 
@@ -35,7 +48,7 @@ int load_super(const unsigned int vol) {
   current_vol = vol;
   read_bloc_n(vol, SUPER, (unsigned char*)&current_super, sizeof(struct super_s));
 	
-  return current_super.super_magic == SUPER_MAGIC;
+  return is_init_super(current_super);
 }
 
 
@@ -46,6 +59,11 @@ unsigned int new_bloc() {
 
   /* Debug */
   printf("super_n_free: %d\n", current_super.super_n_free);
+
+  if(current_super.super_magic != SUPER_MAGIC){
+    fprintf(stderr, "Super bloc non initialisé.\n");
+    return 0;
+  }
 
   if(current_super.super_n_free <= 0) {
     fprintf(stderr, "Plus de place libre sur ce volume.\n");

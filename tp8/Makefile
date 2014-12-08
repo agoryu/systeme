@@ -113,8 +113,10 @@ clean:
 cleandoc:
 	$(RM) -R ./html/
 
-realclean: clean cleandoc
+cleanbin:
 	$(RM) $(BINARIES) vdiskA.bin vdiskB.bin
+
+realclean: clean cleandoc cleanbin
 
 doc:
 	doxygen doxygen_log.txt

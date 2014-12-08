@@ -1,5 +1,6 @@
 #include "inode.h"
 #include "ifile.h"
+#include "tools.h"
 
 static void empty_it(){
   return;
@@ -32,23 +33,40 @@ int main(int argc, char**argv){
     exit(EXIT_FAILURE);
   }
 
+  /* initialise le super du premier volume */
+  init_super(CURRENT_VOLUME);
+
+  /* charge le super du premier volume dans la variable globale */
+  load_super(CURRENT_VOLUME);
+
   /* Test fichier */
   inumber = create_ifile(IT_FILE);
   if(!inumber){
     fprintf(stderr, "Erreur lors de la creation du fichier\n");
   }
 
-  if(!open_ifile(&fd, inumber)){
+  if(open_ifile(&fd, inumber) == RETURN_FAILURE){
     fprintf(stderr, "Erreur lors de l'ouverture du fichier\n");
+  } else {
+    printf("open_ifile effectué.\n");
   }
+  printf("fd.fds_size: %d\n", fd.fds_size);
+  printf("fd.fds_pos: %d\n", fd.fds_pos);
 
-  if(!write_ifile(&fd, "bonjour", 7)){
+  if(write_ifile(&fd, "bonjour", 7) == RETURN_FAILURE){
     fprintf(stderr, "Erreur lors de l'ecriture dans le fichier\n");
+  } else {
+    printf("write_ifile effectué.\n");
   }
 
-  if(!read_ifile(&fd, buf, 7)){
+
+  if(read_ifile(&fd, buf, 7) == RETURN_FAILURE){
     fprintf(stderr, "Erreur lors de la lecture dans le fichier\n");
+  } else {
+    printf("read_ifile effectué.\n");
   }
+
+  printf("fd.fds_pos: %d\n", fd.fds_pos);
 
   for (i = 0; i < 10; i++) {
     printf("%c", buf[i]);
@@ -56,4 +74,5 @@ int main(int argc, char**argv){
   printf("\n");
 
 
+  exit(EXIT_SUCCESS);
 }

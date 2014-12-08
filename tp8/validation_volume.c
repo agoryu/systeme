@@ -33,11 +33,11 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  /* initialise le super du volume 1 */
-  init_super(0);
+  /* initialise le super du premier volume */
+  init_super(CURRENT_VOLUME);
 
-  /* charge le super du volume 1 dans la variable globale */
-  load_super(0);
+  /* charge le super du premier volume dans la variable globale */
+  load_super(CURRENT_VOLUME);
 
   /* creation de nouveau bloc jusqu'a ce qu'il y est une erreur */
   while(new_bloc());
