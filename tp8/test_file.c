@@ -47,28 +47,25 @@ int main(int argc, char**argv){
 
   if(open_ifile(&fd, inumber) == RETURN_FAILURE){
     fprintf(stderr, "Erreur lors de l'ouverture du fichier\n");
-  } else {
-    printf("open_ifile effectué.\n");
+    exit(EXIT_FAILURE);
   }
-  printf("fd.fds_size: %d\n", fd.fds_size);
-  printf("fd.fds_pos: %d\n", fd.fds_pos);
 
   if(write_ifile(&fd, "bonjour", 7) == RETURN_FAILURE){
     fprintf(stderr, "Erreur lors de l'ecriture dans le fichier\n");
-  } else {
-    printf("write_ifile effectué.\n");
+    exit(EXIT_FAILURE);
   }
 
+  seek2_ifile(&fd, 0); 
 
   if(read_ifile(&fd, buf, 7) == RETURN_FAILURE){
     fprintf(stderr, "Erreur lors de la lecture dans le fichier\n");
-  } else {
-    printf("read_ifile effectué.\n");
+    exit(EXIT_FAILURE);
   }
 
-  printf("fd.fds_pos: %d\n", fd.fds_pos);
+  flush_ifile(&fd);
+  close_ifile(&fd);
 
-  for (i = 0; i < 10; i++) {
+  for (i = 0; i < 7; i++) {
     printf("%c", buf[i]);
   }
   printf("\n");

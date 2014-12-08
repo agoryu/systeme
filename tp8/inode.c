@@ -22,8 +22,6 @@ unsigned int create_inode(const enum inode_type_e type){
   inode.in_type = type;
   inumber = new_bloc();
 
-  printf("inumber: %d\n", inumber);
-
   if( !inumber ){
     fprintf(stderr, "Disque plein, impossible de créer un nouvel inode.\n");
     return 0;

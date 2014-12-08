@@ -18,6 +18,8 @@ OBJ_EXE  += validation_volume.o mknfs.o
 OBJ_EXE  += dfs.o test_file.o
 OBJECTS  =  $(OBJ_LIB) $(OBJ_EXE)
 
+TRASHFILE = *.gch *~ \#*\# nul
+
 
 
 all: 	$(BINARIES) $(OBJECTS)
@@ -105,18 +107,24 @@ drive.o: drive.h drive.c
 
 
 
-.PHONY:	clean realclean doc
+.PHONY:	clean cleantrash cleandoc cleanbin cleandisk realclean doc
 
-clean:
-	$(RM) *~ *.o \#*\# nul *.gch
+cleantrash:
+	$(RM) $(TRASHFILE)
+
+clean: cleantrash
+	$(RM) *.o
 
 cleandoc:
 	$(RM) -R ./html/
 
 cleanbin:
-	$(RM) $(BINARIES) vdiskA.bin vdiskB.bin
+	$(RM) $(BINARIES)
 
-realclean: clean cleandoc cleanbin
+cleandisk:
+	$(RM) vdiskA.bin vdiskB.bin
+
+realclean: clean cleandoc cleanbin cleandisk
 
 doc:
 	doxygen doxygen_log.txt

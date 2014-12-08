@@ -23,7 +23,6 @@ void init_super(const unsigned int vol) {
 
   read_bloc_n(vol, SUPER, (unsigned char*)&super, sizeof(struct super_s));
   if(is_init_super(super)){
-    printf("super déjà initialisé.\n");
     return;
   }
 
@@ -34,7 +33,6 @@ void init_super(const unsigned int vol) {
 
   super.super_n_free = free_size;
   write_bloc_n(vol, SUPER, (unsigned char*)&super, sizeof(struct super_s));
-  printf("super initialisé.\n");
 }
 
 
@@ -56,9 +54,6 @@ unsigned int new_bloc() {
 	
   struct free_bloc_s free_bloc;
   unsigned int new;
-
-  /* Debug */
-  printf("super_n_free: %d\n", current_super.super_n_free);
 
   if(current_super.super_magic != SUPER_MAGIC){
     fprintf(stderr, "Super bloc non initialisé.\n");
