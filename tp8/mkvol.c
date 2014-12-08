@@ -5,9 +5,9 @@ static void empty_it(){
 }
 
 void usage(){
-  printf("Utilisation: mkvol [ARGUMENT]\n");
+  printf("Utilisation: mkvol -s NB_BLOC -fc CYLINDRE -fs SECTOR\n");
   printf("\n");
-  printf("Permet la creation d'un volume");
+  printf("Permets la creation d'un volume");
   printf("\n");
   printf(" -s \t l'argument qui suit est le nombre de blocs pour le volume\n");
   printf(" -fc \t l'argument qui suit est le cylindre a partir duquel le volume commence\n");

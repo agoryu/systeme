@@ -11,11 +11,11 @@ LIBS    = -L$(LIBDIR) -lhardware
 
 
 BINARIES =  dmps frmt mkvol dvol validation_volume 
-BINARIES += mknfs dfs test_file
+BINARIES += mknfs dfs mkfile readfile writefile 
 OBJ_LIB	 =  drive.o mbr.o vol.o inode.o ifile.o
 OBJ_EXE  =  dmps.o frmt.o mkvol.o dvol.o 
-OBJ_EXE  += validation_volume.o mknfs.o 
-OBJ_EXE  += dfs.o test_file.o
+OBJ_EXE  += validation_volume.o mknfs.o dfs.o
+OBJ_EXE  += mkfile.o readfile.o writefile.o
 OBJECTS  =  $(OBJ_LIB) $(OBJ_EXE)
 
 TRASHFILE = *.gch *~ \#*\# nul
@@ -32,10 +32,22 @@ check-syntax:
 # -------------------------------------------
 
 # Quatrième couche: manipulation de fichiers
-test_file: test_file.o ifile.o inode.o vol.o mbr.o drive.o tools.o
+writefile: writefile.o ifile.o inode.o vol.o mbr.o drive.o tools.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
-test_file.o: test_file.c ifile.h inode.h vol.h mbr.h drive.h tools.h
+writefile.o: writefile.c ifile.h inode.h vol.h mbr.h drive.h tools.h
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+readfile: readfile.o ifile.o inode.o vol.o mbr.o drive.o tools.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+readfile.o: readfile.c ifile.h inode.h vol.h mbr.h drive.h tools.h
+	$(CC) $(CFLAGS) -c $^ $(INCDIR)
+
+mkfile: mkfile.o ifile.o inode.o vol.o mbr.o drive.o tools.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+mkfile.o: mkfile.c ifile.h inode.h vol.h mbr.h drive.h tools.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 ifile.o: ifile.h ifile.c inode.h tools.h

@@ -6,13 +6,25 @@ static void empty_it(){
   return;
 }
 
+void usage(){
+  printf("Utilisation: mkfile\n");
+  printf("\n");
+  printf("Retourne et affiche l'inoeud du fichier créé.\n");
+  printf("\n");
+  printf("Exemple:\n");
+  printf("\t$mkfile\n");
+}
+
 int main(int argc, char**argv){
 
   unsigned int i;
   unsigned int inumber;
-  file_desc_t fd;
 
-  char buf[1024];
+  /* gestion des arguments */
+  if(argc != 1){
+    usage();
+    exit(EXIT_SUCCESS);
+  }
 
   /* init hardware */
   if(!init_hardware(HW_CONFIG)) {
@@ -39,37 +51,15 @@ int main(int argc, char**argv){
   /* charge le super du premier volume dans la variable globale */
   load_super(CURRENT_VOLUME);
 
-  /* Test fichier */
+  /* création du fichier */
   inumber = create_ifile(IT_FILE);
   if(!inumber){
     fprintf(stderr, "Erreur lors de la creation du fichier\n");
-  }
-
-  if(open_ifile(&fd, inumber) == RETURN_FAILURE){
-    fprintf(stderr, "Erreur lors de l'ouverture du fichier\n");
     exit(EXIT_FAILURE);
   }
+  
+  printf("Création d'un fichier:\n");
+  printf("\tinumber: %d.\n", inumber);
 
-  if(write_ifile(&fd, "bonjour", 7) == RETURN_FAILURE){
-    fprintf(stderr, "Erreur lors de l'ecriture dans le fichier\n");
-    exit(EXIT_FAILURE);
-  }
-
-  seek2_ifile(&fd, 0); 
-
-  if(read_ifile(&fd, buf, 7) == RETURN_FAILURE){
-    fprintf(stderr, "Erreur lors de la lecture dans le fichier\n");
-    exit(EXIT_FAILURE);
-  }
-
-  flush_ifile(&fd);
-  close_ifile(&fd);
-
-  for (i = 0; i < 7; i++) {
-    printf("%c", buf[i]);
-  }
-  printf("\n");
-
-
-  exit(EXIT_SUCCESS);
+  exit(inumber);
 }

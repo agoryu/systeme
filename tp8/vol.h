@@ -11,7 +11,7 @@
 #include "mbr.h"
 
 /** Position du super dans la liste de bloc */
-#define SUPER 0
+#define SUPER_BLOC 0
 /** Magique utilisé pour Le bloc super */
 #define SUPER_MAGIC 0xDEADC0DE
 

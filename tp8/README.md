@@ -8,10 +8,18 @@ Un systeme de fichiers a la Unix
 - Elliot VANEGUE
 - Gaëtan DEFLANDRE
 
-
-  
 * * *
-  
+
+
+# Table des matières
+
+- TP5 : Accès au materiel
+- TP6 : Gestion de volumes
+- TP7 : Structure d'un volume
+- TP8 : Structure d'un fichier
+
+* * *
+
 
 # TP5 : Accès au materiel
 
@@ -62,7 +70,7 @@ On y retrouve les fonctions:
 
 	void format_all(const unsigned int value);
 
-*Plus d'information sur les fonctions et structure de donnees dans la documentation.*
+*Plus d'informations sur les fonctions et structure de données dans la documentation.*
 
 
 ### Commandes dmps et frmt 
@@ -130,7 +138,7 @@ On y retrouve les fonctions:
 
 	void display_vol();
 
-*Plus d'information sur les fonctions et structure de donnees dans la documentation.*
+*Plus d'informations sur les fonctions et structure de données dans la documentation.*
 
 
 ### Commandes mkvol et dvol
@@ -186,7 +194,7 @@ Output:
 * * *
   
 
-# TP7 : Structure d'un volume (partie 1)
+# TP7 : Structure d'un volume
 
 
 ## Description
@@ -217,7 +225,7 @@ On y retrouve les fonctions:
 
     unsigned int get_nb_free_bloc();
     
-*Plus d'information sur les fonctions et structure de donnees dans la documentation.*
+*Plus d'informations sur les fonctions et structure de données dans la documentation.*
 
 
 ### Les commandes validation_volume, mknfs et dfs
@@ -273,3 +281,89 @@ Output:
 
     Il reste 9 espace dans le volume courant.
 
+
+
+
+  
+* * *
+  
+
+# TP8 : Structure d'un fichier
+
+
+## Description
+
+Les fichiers sont indexés par les inoeuds, la gestion des inoeuds est faite 
+dans les fichiers:
+
+ - inode.h
+ - inode.c
+
+On y retrouve les fonctions:
+
+    void read_inode(const unsigned int inumber, struct inode_s *inode);
+
+    void write_inode(const unsigned int inumber, const struct inode_s *inode);
+
+    unsigned int create_inode(const enum inode_type_e type);
+
+    int delete_inode(const unsigned int inumber);
+
+    unsigned int vbloc_of_fbloc(const unsigned int inumber, 
+                                const unsigned int fbloc,
+                                const unsigned int do_allocate);
+                                
+Les fonctions de gestions des inoeuds utilisent les fonctions de **vol.h**.  
+La fonction vbloc_of_fbloc gère allocution de nouveaux blocs lorsque 
+*do_allocate* est vrai.
+
+*Plus d'informations sur les fonctions et structure de données dans la documentation.*
+
+
+## Manipulation de fichiers
+
+ - ifile.h
+ - ifile.c
+ 
+Fichiers du professeur qui gèrent la manipulation de fichiers.
+
+
+## Commandes mkfile, writefile et readfile
+
+Commandes pour tester les inoeuds.
+
+
+### Commande mkfile
+
+Commande qui retourne  et affiche l'inoeud du fichier créé.
+
+#### Utilisation
+
+    $ ./mkfile
+    
+Output:
+
+    Création d'un fichier:
+        inumber: 1.
+
+
+### Commande writefile
+
+Permets l'écriture sur un fichier existant à partir de son inumber.
+
+#### Utilisation
+
+    $ ./writefile 1 "Contenu texte du fichier d'inumber 1"
+
+
+### Commande readfile
+
+Permets de lire un fichier existant à partir de son inumber.
+
+#### Utilisation
+
+    $ ./readfile 1
+   
+Output:
+
+    Contenu texte du fichier d'inumber 1
