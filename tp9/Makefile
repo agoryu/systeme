@@ -1,5 +1,5 @@
-ROOTDIR =../libhardware
-#ROOTDIR =/home/enseign/ASE
+#ROOTDIR =../libhardware
+ROOTDIR =/home/enseign/ASE
 
 CC	= gcc
 CFLAGS	= -Wall -Werror -ansi -pedantic -m32 
@@ -10,7 +10,7 @@ INCDIR  = -I$(ROOTDIR)/include
 LIBS    = -L$(LIBDIR) -lhardware
 
 
-BINARIES =  main 
+BINARIES =  test
 OBJECTS  =  mi_kernel.o mi_user.o
 
 TRASHFILE = *.gch *~ \#*\# nul
@@ -27,7 +27,7 @@ check-syntax:
 # -------------------------------------------
 
 # Quatrième couche: manipulation de fichiers
-main: mi_user.o mi_kernel.o
+test: mi_user.o mi_kernel.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 mi_user.o: mi_user.c mi_syscall.h
@@ -37,7 +37,10 @@ mi_kernel.o: mi_kernel.c mi_syscall.h
 	$(CC) $(CFLAGS) -c $^ $(INCDIR)
 
 
-.PHONY:	clean cleantrash cleandoc cleanbin cleandisk realclean doc
+
+
+
+.PHONY:	clean cleantrash cleandoc cleanbin realclean doc
 
 cleantrash:
 	$(RM) $(TRASHFILE)
