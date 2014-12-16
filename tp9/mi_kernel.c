@@ -3,10 +3,7 @@
 
 static int current_process;
 
-
-
 static int ppage_of_vaddr(const int process, const unsigned vaddr);
-
 
 static void switch_to_process0(void) {
 
@@ -14,31 +11,36 @@ static void switch_to_process0(void) {
   _out(MMU_CMD, MMU_RESET);
 }
 
-
 static void switch_to_process1(void) {
 
   current_process = 1;
   _out(MMU_CMD, MMU_RESET);
 }
 
+unsigned is_vaddr(const unsigned vaddr){
+  if(vaddr < VM_BEGIN || vaddr > VM_END) {
+    return 0;
+  }
+  return 1;
+}
 
 int ppage_of_vaddr(const int process, const unsigned vaddr) {
 
   int vpage;
   int ppage;
 
-  //verification de la validité de l'adresse virtuel
-  if(vaddr < VM_BEGIN || vaddr > VM_END) {
-    printf("erreur l'adresse virtuel n'est pas valide");
+  /* verification de la validité de l'adresse virtuel */
+  if(!is_vaddr(vaddr)) {
+    fprintf(stderr, "Erreur l'adresse virtuel n'est pas valide.\n");
     return -1;
   }
 
 
   vpage = (vaddr >> 12) & 0xFFF;
 
-  //ya pas de raison de passé la dedans avec la verif du dessus
+  /* ya pas de raison de passé la dedans avec la verif du dessus */
   if(vpage > N/2) {
-    printf("erreur la page n'est pas bonne");
+    fprintf(stderr, "Erreur page virtuelle incorrecte.\n");
     return -1;
   }
 
@@ -89,7 +91,7 @@ void mmuhandler() {
 
 int main(int argc, char **argv) {
 
-   if(!init()){
+  if(!init()){
     fprintf(stderr, "Erreur lors de l'intialisation global.\n");
     exit(EXIT_FAILURE);
   }

@@ -93,6 +93,19 @@ struct tlb_entity_s {
 void mmuhandler();
 
 /**
+ * Vérification de la validité de l'adresse virtuelle.
+ * \param[in] vaddr L'adresse à tester.
+ * \return 1 si l'adresse est dans l'espace des adresses virtuelles,
+ * sinon 0.
+ */
+unsigned is_vaddr(const unsigned vaddr);
+
+/**
+ *
+ */
+int ppage_of_vaddr(const int process, const unsigned vaddr);
+
+/**
  * Initialise les interruptions et met le système en mode 
  * utilisateur.
  * \return 1 si correctement initialiser sinon 0.
@@ -102,6 +115,6 @@ unsigned init();
 /**
  * Fonction de test, qui crée des interruptions logiciels.
  */
-void user(); 
+void user();
 
 #endif /* _MI_SYSCALL_H_ */
