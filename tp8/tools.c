@@ -1,5 +1,5 @@
 /* ------------------------------
-   $Id: tools.c,v 1.1 2009/11/16 05:38:07 marquet Exp $
+   $Id: tools.c 7085 2013-10-18 15:37:14Z marquet $
    ------------------------------------------------------------
 
    Misc. tools
@@ -31,5 +31,26 @@ fatal(int assert, const char *fname, const char *fmt, ...)
     }
 
     /* make gcc -W happy */
-    return RETURN_SUCCESS;
+    return EXIT_FAILURE;
 }
+
+/*------------------------------
+  strdup() is not ANSI.
+  ------------------------------------------------------------*/
+#ifdef STRDUP_MISSING
+
+#include <string.h>
+
+char *
+strdup(const char *s)
+{
+    size_t siz;
+    char *copy;
+    
+    siz = strlen(s) + 1;
+    if ((copy = malloc(siz)) == NULL)
+	return(NULL);
+    (void)memcpy(copy, s, siz);
+    return(copy);
+}
+#endif /* STRDUP_MISSING */

@@ -12,6 +12,15 @@
 #define _IFILE_H_
 
 #include "inode.h"
+#include "tools.h"
+
+/* a binary must mount a volume/file system before any other operations.
+   A sole file system mount is allowed.
+   The file system must be umount.
+*/
+
+int mount(unsigned int vol);
+int umount();
 
 /* Despite the user does not need these definitions, our first
    implementation allocates file descriptors in the user space. Thus
@@ -46,5 +55,8 @@ int readc_ifile(file_desc_t *fd);
 int writec_ifile(file_desc_t *fd, char c);
 int read_ifile(file_desc_t *fd, void *buf, unsigned int nbyte);
 int write_ifile(file_desc_t *fd, const void *buf, unsigned int nbyte);
+
+/* the inode is already loaded, shortcut the begining of open_ifile() */
+int iopen_ifile(file_desc_t *fd, unsigned int inumber, struct inode_s *inode);
 
 #endif

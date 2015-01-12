@@ -12,8 +12,6 @@
 #include <stdio.h>
 #include <memory.h>
 
-#include "inode.h"
-#include "tools.h"
 #include "ifile.h"
 
 
@@ -55,28 +53,8 @@ delete_ifile(unsigned int inumber)
 int
 open_ifile(file_desc_t *fd, unsigned int inumber)
 {
-    unsigned int first_bloc;
     struct inode_s inode; 
-    /* we are opening the designed file! */
-    fd->fds_inumber = inumber;
-    read_inode (inumber, &inode);    
-    
-    /* other trivial init */
-    fd->fds_size = inode.in_size;
-    fd->fds_pos = 0;
-
-    /* the buffer is full of zeros if the first bloc is zero, loaded
-       with this first bloc otherwise */
-    first_bloc = vbloc_of_fbloc(inumber, 0, FALSE);
-    if (! first_bloc) 
-	memset(fd->fds_buf, 0, BLOC_SIZE);
-    else
-	read_bloc(current_vol, first_bloc, fd->fds_buf);
-
-    /* last trivial */
-    fd->fds_dirty = FALSE;
-
-    return RETURN_SUCCESS;
+    return iopen_ifile(fd, inumber, &inode);
 }
 
 void
@@ -259,4 +237,57 @@ write_ifile(file_desc_t *fd, const void *buf, unsigned int nbyte)
     }
 
     return nbyte;
+}
+
+int 
+iopen_ifile
+(file_desc_t *fd, unsigned int inumber, struct inode_s *inode)
+{
+    unsigned int first_bloc;
+    /* we are opening the designed file! */
+    fd->fds_inumber = inumber;
+    
+    /* other trivial init */
+    fd->fds_size = inode->in_size;
+    fd->fds_pos = 0;
+
+    /* the buffer is full of zeros if the first bloc is zero, loaded
+       with this first bloc otherwise */
+    first_bloc = vbloc_of_fbloc(inumber, 0, FALSE);
+    if (! first_bloc) 
+  memset(fd->fds_buf, 0, BLOC_SIZE);
+    else
+  read_bloc(current_vol, first_bloc, fd->fds_buf);
+
+    /* last trivial */
+    fd->fds_dirty = FALSE;
+
+    return RETURN_SUCCESS;
+}
+
+int mount(unsigned int vol) {
+
+  /* initialise le super du premier volume */
+  init_super(vol);
+
+  /* charge le super du premier volume dans la variable globale */
+  load_super(vol);
+
+  return vol;
+}
+
+int umount() {
+
+  if(current_vol == CURRENT_VOLUME){
+    fprintf(stderr, "Impossible de démonter le volume principal.\n");
+    return RETURN_FAILURE;
+  }
+
+  /* initialise le super du premier volume */
+  init_super(CURRENT_VOLUME);
+
+  /* charge le super du premier volume dans la variable globale */
+  load_super(CURRENT_VOLUME);
+
+  return CURRENT_VOLUME;
 }

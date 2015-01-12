@@ -3,7 +3,7 @@
 
 static int current_process;
 
-static int ppage_of_vaddr(const int process, const unsigned vaddr);
+int ppage_of_vaddr(const int process, const unsigned vaddr);
 
 static void switch_to_process0(void) {
 
